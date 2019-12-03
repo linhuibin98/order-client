@@ -1,0 +1,1585 @@
+/* 底部tab导航 开始*/
+.tab_bar_container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  border-top: 1px solid #eaeaea;
+  background-color: #fff;
+}
+
+.tab_bar_container .tab_item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 5px 0;
+  color: #b3b3b3;
+}
+
+.tab_item.selected {
+  color: #0093fd;
+}
+
+.tab_item i {
+  font-size: 45px;
+}
+
+.tab_item span {
+  font-size: 20px;
+}
+/* 底部tab导航 结束 */
+
+/* stars组件 开始 */
+.star_wrapper {
+  text-align: center;
+
+  i {
+    font-size: 20px;
+  }
+}
+/* stars组件 结束 */
+
+/* 订单页 开始 */
+.order_container {
+  .title {
+    font-size: 40px;
+    font-weight: bold;
+    padding: 4vw;
+  }
+
+  .order_list {
+    padding-bottom: 80px;
+
+    .order_item {
+      display: flex;
+      background-color: #fff;
+      padding: 3.733333vw 0 0 4vw;
+      margin-top: 2.666667vw;
+
+      .order_avatar {
+        height: 8.533333vw;
+        padding-right: 2.666667vw;
+        flex: none;
+
+        img {
+          width: 8.5333333vw;
+          height: 8.533333vw;
+        }
+      }
+
+      .order_detail {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        border-bottom: 1px solid #eee;
+
+        .trade_name {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.5em;
+          border-bottom: 1px solid #eee;
+          padding-right: 3.466667vw;
+          padding-bottom: 2.666667vw;
+
+          .trade {
+            display: flex;
+            align-items: center;
+
+            .name {
+              color: #333;
+              max-width: 10em;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              line-height: 1.5em;
+              font-weight: 700;
+              font-size: 28px;
+            }
+            .spilt {
+              padding-left: 20px;
+              color: #aaa;
+              text-align: center;
+            }
+            .arrive {
+              flex: 1;
+              font-size: 20px;
+              color: #565656;
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
+            }
+          }
+          .order_time {
+            font-size: 0.293333rem;
+            color: #999;
+          }
+        }
+
+        .foods_detail {
+          display: flex;
+          justify-content: space-between;
+          font-size: 22px;
+          font-weight: 600;
+          color: #565656;
+          padding: 4vw 3.466667vw 4vw 0;
+          border-bottom: 1px solid #eee;
+
+          .name {
+            display: flex;
+
+            .n {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              max-width: 10em;
+            }
+
+            .num {
+              padding-left: 15px;
+            }
+          }
+
+          .price {
+            text-align: right;
+            color: #333;
+            font-weight: 700;
+          }
+        }
+
+        .order_operate {
+          display: flex;
+          justify-content: flex-end;
+          padding: 2.666667vw 4.266667vw;
+
+          button {
+            background-color: #fff;
+            border: 1px solid #8fb9ff;
+            border-radius: 5px;
+            padding: 2.666667vw 4.266667vw;
+            color: #2395ff;
+            font-size: 20px;
+
+            &:first-child {
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/* 订单页 结束 */
+
+/* home header 开始*/
+.home_container {
+  height: 100vh;
+  background-color: #fff;
+
+  .home_header {
+    padding: 30px 20px 15px 20px;
+    background-color: #00a8ff;
+
+    .header_address {
+      font-size: 30px;
+      color: #fff;
+      padding-bottom: 25px;
+
+      .icon-zuobiao {
+        font-size: 28px;
+        padding-right: 10px;
+      }
+
+      .address_name {
+        max-width: 8em;
+        font-weight: bold;
+      }
+
+      .icon_trig {
+        position: relative;
+        top: 15px;
+        left: 10px;
+        width: 5px;
+        height: 5px;
+        border: 5px solid;
+        border-color: #fff transparent transparent transparent;
+      }
+    }
+
+    .search_input {
+      .ipt {
+        width: 100%;
+        height: 60px;
+        border-radius: 3px;
+        text-align: center;
+        background-color: #fff;
+        font-size: 24px;
+        line-height: 60px;
+        color: #b6b6b6;
+
+        i {
+          font-size: 22px;
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+}
+/* home header 结束*/
+
+/*home 推荐标题*/
+.recommended_merchants {
+  padding: 30px;
+  text-align: center;
+
+  .title {
+    padding: 0 22px;
+    color: #333;
+    font-size: 28px;
+  }
+
+  .split {
+    color: #b2b2b2;
+  }
+}
+
+/* 商家列表 开始 */
+.merchants {
+  padding-bottom: 80px;
+
+  .merchant_list {
+    .merchant_item {
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      padding: 25px 20px;
+      border-bottom: 1px solid #eee;
+
+      .merchant_detail {
+        display: flex;
+        color: #333;
+
+        .left_logo {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #eee;
+          height: 112px;
+          margin-right: 15px;
+
+          img {
+            width: 110px;
+            height: 110px;
+          }
+        }
+
+        .text_detail {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+
+          .name {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+
+            h2 {
+              max-width: 6em;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+
+          .rate_num {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            padding: 20px 0;
+
+            .stars {
+              display: flex;
+
+              & > span {
+                padding-left: 10px;
+              }
+            }
+          }
+
+          .dispatch {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+
+            .split {
+              padding: 0 5px;
+              color: #aaa;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/* 商家列表 结束 */
+
+/* 用户详情页 开始 */
+.user_container {
+  .user_login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00a8ff;
+    height: 188px;
+
+    .btn {
+      padding: 15px 40px;
+      border: none;
+      background-color: #eee;
+      border-radius: 10px;
+      font-size: 26px;
+
+      &:first-child {
+        margin-right: 40px;
+      }
+    }
+  }
+
+  .user_detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 25px;
+    background-color: #00a8ff;
+
+    .profile {
+      display: flex;
+      align-items: center;
+
+      .avatar {
+        padding-right: 30px;
+
+        img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+        }
+      }
+
+      .profile_text {
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+      }
+    }
+
+    .split {
+      // flex: ;
+      color: #fff;
+    }
+  }
+
+  .coupon {
+    width: 100%;
+    display: flex;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+
+    .con {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 35px 0;
+
+      & > p span {
+        font-size: 80px;
+      }
+    }
+
+    .red_packets {
+      border-right: 1px solid #ccc;
+      color: rgb(255, 95, 62);
+    }
+
+    .integral {
+      color: rgb(106, 194, 11);
+    }
+  }
+
+  .address_b {
+    display: flex;
+    padding: 20px 25px;
+    margin-top: 15px;
+    background-color: #fff;
+
+    .icon {
+      color: #00a8ff;
+    }
+    .address {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      color: #333;
+      padding-left: 15px;
+
+      & > span:last-child {
+        color: #ccc;
+      }
+    }
+  }
+
+  .help_container {
+    width: 100%;
+    margin-top: 15px;
+    background-color: #fff;
+
+    .help {
+      display: flex;
+      padding: 20px 25px;
+
+      .help-i {
+        padding-right: 15px;
+        color: #00a8ff;
+      }
+
+      .help-t {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+
+        & > span:last-child {
+          color: #ccc;
+        }
+
+        &.gua {
+          padding-bottom: 0;
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+/* 用户详情页 结束 */
+
+/* 搜索页面 开始 */
+.search_container {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  color: #999;
+
+  .goback {
+    padding: 20px 0 30px 10px;
+    font-size: 20px;
+  }
+
+  .search_input {
+    position: relative;
+    padding-left: 20px;
+
+    .icon-sousuo {
+      position: absolute;
+      top: 22px;
+      left: 40px;
+      font-size: 22px;
+    }
+
+    input {
+      background-color: #f8f8f8;
+      border: none;
+      padding: 1.733333vw 4vw 1.733333vw 8.8vw;
+      width: 80vw;
+      font-size: 22px;
+    }
+    .btn {
+      padding: 1.733333vw 20px;
+      border: none;
+      background-color: #fff;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+
+  .history_search_wrapper,
+  .hot_search_wrapper {
+    margin-top: 30px;
+    padding: 0 20px;
+
+    .search_title {
+      display: flex;
+      justify-content: space-between;
+      font-size: 27px;
+      font-weight: 700;
+      color: #666;
+
+      i {
+        font-size: 22px;
+        color: #cecece;
+      }
+    }
+
+    .search_content {
+      .search_item {
+        padding: 15px;
+        border: none;
+        background-color: #f8f8f8;
+        color: #666;
+        margin-right: 30px;
+        margin-top: 30px;
+        border-radius: 5px;
+      }
+    }
+  }
+}
+
+/* 搜索页面 结束 */
+
+/* 店铺详情页 开始*/
+.goods_container {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+
+  .store_detail {
+    margin-bottom: 20px;
+
+    .nav_goback {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 26.666667vw;
+      padding: 0 20px;
+      background-image: url("https://cube.elemecdn.com/e/f2/53bc3aff9a6477db7f63c7e9998capng.png?x-oss-process=image/format,webp/resize,w_750");
+      background-position: 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-image: linear-gradient(
+          0deg,
+          hsla(0, 0%, 100%, 0),
+          rgba(0, 0, 0, 0.5)
+        );
+      }
+
+      .goback {
+        position: absolute;
+        top: 5px;
+        z-index: 999;
+        i {
+          color: #fff;
+          font-size: 27px;
+        }
+      }
+    }
+    .content {
+      position: relative;
+      padding-top: 215.33px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .store_logo {
+        position: absolute;
+        top: 68px;
+        left: 50%;
+        margin-left: -10vw;
+
+        img {
+          width: 128px;
+          height: 128px;
+        }
+      }
+
+      .store_name {
+        h2 {
+          font-size: 34.9867px;
+        }
+      }
+
+      .store_data {
+        font-size: 18.7733px;
+        padding: 10px 0;
+
+        span {
+          &:nth-child(2) {
+            padding: 0 20px;
+          }
+        }
+      }
+
+      .store_notice {
+        font-size: 18.7733px;
+        max-width: 27em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .shop_tab {
+    .shop_tabbar {
+      display: flex;
+      border-bottom: 1px solid #fcfcfc;
+
+      .tabbar_item {
+        position: relative;
+        flex: 1;
+        text-align: center;
+        padding: 20px 0;
+        font-size: 25.6px;
+        font-weight: 700;
+
+        span {
+          position: absolute;
+          left: calc(16.6667vw - 25px);
+          box-sizing: border-box;
+          bottom: 0;
+          height: 100%;
+          width: 50px;
+          height: 0px;
+
+          &.active {
+            border-bottom: 3px solid #2395ff;
+          }
+        }
+      }
+    }
+  }
+  .main_content {
+    padding-bottom: 100px;
+  }
+  .merchant_recommendation {
+    padding-top: 27.3067px;
+
+    h2 {
+      padding-left: 27.3067px;
+      font-size: 27.3067px;
+      margin-bottom: 17.0667px;
+    }
+
+    .recommend {
+      .recommend_wrapper {
+        display: flex;
+        font-size: 24px;
+        overflow-x: auto;
+        -ms-overflow-style: none;
+        overflow: -moz-scrollbars-none;
+
+        &::-webkit-scrollbar {
+          height: 0;
+        }
+
+        .recommend_item:first-child {
+          margin-left: 27.3067px;
+        }
+
+        .recommend_item {
+          width: 32vw;
+          margin-right: 17.0667px;
+          flex: none;
+
+          img {
+            width: 32vw;
+          }
+
+          .food_detail {
+            .food_name {
+              margin-top: 12px;
+              margin-bottom: 6px;
+              max-width: 8em;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+            .food_data {
+              margin-bottom: 12px;
+              font-size: 17.0667px;
+            }
+
+            .food_card {
+              display: flex;
+              justify-content: space-between;
+              font-size: 30.72px;
+              color: #ff6048;
+              align-items: center;
+
+              .operate {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                a {
+                  i {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: #2395ff;
+                    font-size: 45px;
+                  }
+                }
+                span {
+                  color: #5e5e5e;
+                  padding: 0 10px;
+                  font-size: 26px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .menuview_wrapper {
+    margin-top: 27.3067px;
+    height: 100%;
+
+    .menuview_main {
+      display: flex;
+      background-color: #fff;
+      height: 100%;
+
+      .left_menu {
+        background-color: #f8f8f8;
+        width: 20.533333vw;
+        height: 100%;
+
+        .menu_category {
+          position: relative;
+          z-index: 0;
+          overflow-y: auto;
+          -ms-overflow-style: none;
+          overflow: -moz-scrollbars-none;
+          height: 100%;
+
+          &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+          }
+
+          .menu_item {
+            padding: 29.8667px 12.8px;
+            font-size: 20.48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &.active {
+              background-color: #fff;
+            }
+          }
+        }
+      }
+
+      .right_content {
+        position: relative;
+        width: 79.466667vw;
+        height: 100%;
+
+        .scroller {
+          overflow-y: auto;
+          -ms-overflow-style: none;
+          overflow: -moz-scrollbars-none;
+          height: 100%;
+
+          &::-webkit-scrollbar {
+            width: 0;
+          }
+
+          dl {
+            background-color: #fff;
+            dt {
+              padding-left: 2.66667vw;
+
+              .food_title {
+                display: flex;
+                align-items: center;
+
+                strong {
+                  margin-right: 10px;
+                  font-size: 20.48px;
+                  color: #666;
+                }
+
+                span {
+                  font-size: 17.0667px;
+                  color: #999;
+                }
+              }
+            }
+
+            dd {
+              padding-left: 2.66667vw;
+
+              .food_detail_wrapper {
+                display: flex;
+                padding: 2.6667vw 0;
+
+                .food_pic {
+                  width: 25.3333vw;
+                  height: 25.3333vw;
+                  margin-right: 2.66667vw;
+
+                  img {
+                    width: 100%;
+                  }
+                }
+
+                .food {
+                  flex: 1;
+                  .food_detail {
+                    .food_name {
+                      font-size: 25.6px;
+                      color: #333;
+                      font-weight: 700;
+                      overflow: hidden;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                      max-width: 10em;
+                    }
+
+                    .food_desc {
+                      margin: 8.5333px 0;
+                      font-size: 17.0667px;
+                      color: #999;
+                      overflow: hidden;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                      max-width: 15em;
+                    }
+
+                    .food_sales {
+                      margin: 8.5333px 0;
+                      font-size: 17.0667px;
+                      color: #999;
+
+                      span {
+                        padding-right: 10px;
+                      }
+                    }
+                  }
+
+                  .food_card {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 30.72px;
+                    color: #ff6048;
+                    align-items: center;
+
+                    .operate {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      padding-right: 30px;
+
+                      a {
+                        i {
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          color: #2395ff;
+                          font-size: 45px;
+                        }
+                      }
+                      span {
+                        color: #5e5e5e;
+                        padding: 0 10px;
+                        font-size: 26px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/* 店铺详情页 结束*/
+
+/* ShopInfo组件 开始 */
+.shop_info_wrapper {
+  background-color: #eee;
+
+  section {
+    padding: 4.266667vw 4vw 4vw;
+    margin-bottom: 2.666667vw;
+    font-size: 22.1867px;
+    background-color: #fff;
+    color: #666;
+
+    p:nth-of-type(1) {
+      padding: 25px 0 10px 0;
+    }
+  }
+
+  h3 {
+    color: #000;
+    font-weight: 700;
+    font-size: 25.6px;
+  }
+
+  .merchant_info {
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 4vw 4vw 4vw 0;
+      border-bottom: 1px solid #eee;
+
+      span:first-child {
+        font-weight: 700;
+        color: #333;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        color: #00a6ff;
+      }
+    }
+  }
+
+  .qualifal {
+    color: #000;
+    font-weight: 700;
+    font-size: 25.6px;
+  }
+}
+/* ShopInfo组件 结束 */
+
+/* ShopComment组件 开始 */
+.shop_comment_container {
+  background-color: #eee;
+  color: #666;
+
+  .shop_rate {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    margin-bottom: 2.133333vw;
+    padding: 5.333333vw 0 8vw 6.4vw;
+
+    .rate {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 24px;
+
+      & > p {
+        color: #ff6000;
+        font-size: 64.8533px;
+      }
+
+      .rate_icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 15px;
+        font-size: 20.48px;
+
+        .star_wrapper {
+          i {
+            font-size: 12px;
+          }
+        }
+
+        & > span {
+          margin-bottom: 1.333333vw;
+        }
+      }
+    }
+
+    .taste_score {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      padding: 0 46.08px;
+      font-size: 24px;
+
+      .taste {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          &:first-child {
+            margin-bottom: 1.333333vw;
+          }
+
+          &:last-child {
+            font-size: 34.1333px;
+          }
+        }
+      }
+    }
+
+    .dispatch_rate {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      border-left: 1px solid #ddd;
+
+      span {
+        &:first-child {
+          margin-bottom: 1.333333vw;
+        }
+
+        &:last-child {
+          font-size: 34.1333px;
+        }
+      }
+    }
+  }
+}
+/* ShopComment组件 结束 */
+
+/* Shop页 BottomCart组件 开始 */
+.bottom_cart_container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12.8vw;
+  background-color: #505052;
+  display: flex;
+  padding-left: 21.066667vw;
+  justify-content: space-between;
+
+  .cart_icon {
+    position: absolute;
+    left: 0.32rem;
+    left: 3.2vw;
+    bottom: 0.2rem;
+    bottom: 2vw;
+    width: 1.333333rem;
+    width: 13.333333vw;
+    height: 1.333333rem;
+    height: 13.333333vw;
+    box-sizing: border-box;
+    border-radius: 100%;
+    background-color: #383838;
+    border: 0.133333rem solid #444;
+    border: 1.333333vw solid #444;
+    box-shadow: 0 -0.08rem 0.053333rem 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -0.8vw 0.533333vw 0 rgba(0, 0, 0, 0.1);
+    will-change: transform;
+
+    &.active {
+      background-color: #3190e8;
+    }
+
+    i {
+      position: absolute;
+      top: 10px;
+      left: 8px;
+      color: #5f5f63;
+      font-size: 50px;
+
+      &.active {
+        color: #fff;
+      }
+    }
+  }
+
+  .cart_setail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 21.504px;
+    color: #999;
+
+    .all_price {
+      color: #fff;
+      font-size: 30.72px;
+    }
+  }
+
+  .pay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28vw;
+    color: #fff;
+    font-size: 25.6px;
+
+    &.active {
+      background-color: #38ca73;
+      font-weight: 700;
+    }
+  }
+}
+/* Shop页 BottomCart组件 结束 */
+
+/* 订单确认页 开始 */
+.order_confim_container {
+  .address {
+    padding: 16vw 40px 4.266667vw 40px;
+    background-color: #009fff;
+    color: #fff;
+
+    .address_select {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #fff;
+      padding: 15px 0;
+      color: #fff;
+    }
+
+    p {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 23.8933px;
+      color: #fff;
+
+      &:first-child {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 10px;
+      }
+      span {
+        color: #fff;
+      }
+      span:first-child {
+        display: inline-block;
+        font-size: 37.5467px;
+        font-weight: 700;
+        max-width: 10em;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      span:last-child {
+        margin-left: 80px;
+      }
+    }
+
+    .user_detail {
+      font-size: 23.8933px;
+      color: #fff;
+
+      span {
+        padding-right: 30px;
+      }
+    }
+  }
+
+  .cart_group {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 0 34.333px 75px 34.333px;
+
+    .cart_storename {
+      padding: 27.3063px 0;
+    }
+    .foods {
+      .cart_item {
+        border-top: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        padding: 23.48px 0;
+        font-size: 23.8933px;
+
+        .logo {
+          margin-right: 20px;
+          img {
+            width: 61.4375px;
+          }
+        }
+
+        .name {
+          flex: 5;
+          max-width: 8em;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .num {
+          flex: 2;
+        }
+
+        .price {
+          flex: 3;
+          text-align: right;
+        }
+      }
+    }
+
+    .other {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 23.48px 0;
+      border-top: 1px solid #ccc;
+      font-size: 23.8933px;
+
+      &.price {
+        padding: 30px 0;
+
+        .all_price {
+          font-size: 37.5767px;
+        }
+      }
+    }
+  }
+
+  .pay_bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    height: 75px;
+    background-color: #3c3c3c;
+    color: #fff;
+    font-size: 30px;
+    padding-left: 20px;
+
+    .pay {
+      background-color: #00e067;
+      height: 100%;
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+/* 订单确认页 结束 */
+
+/* 订单详情页 开始*/
+
+.order_detail_container {
+  .order_group {
+    padding-top: 16vw;
+    margin: 0 20px;
+    background-color: #fff;
+    padding-left: 4vw;
+
+    .title {
+      border-bottom: 1px solid #ccc;
+      padding: 15px 0;
+      font-size: 25.6px;
+    }
+
+    ul {
+      .order_item {
+        padding: 3.2vw 0 2.666667vw 0;
+        border-bottom: 1px solid #ccc;
+        font-size: 24px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+/* 订单详情页 结束*/
+
+/* 头部返回 开始*/
+.confim_head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #009fff;
+
+  span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 11.7333vw;
+    height: 11.7333vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      color: #fff;
+    }
+  }
+
+  h1 {
+    height: 11.733333vw;
+    line-height: 11.733333vw;
+    color: #fff;
+    font-size: 30.72px;
+  }
+}
+
+/* 头部返回 结束*/
+
+/* 用户注册页面 开始 */
+.register_wrapper {
+  height: 100%;
+  background-color: #fff;
+  position: relative;
+
+  .confim_head {
+    background-color: #fff;
+    
+    span {
+      i {
+        color: #009fff;
+      }
+    }
+    h1 {
+      color: #009fff;
+    }
+  }
+
+  .form_group {
+    position: absolute;
+    top: 300px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      padding: 40px;
+      background-color: #EAEAEA;
+      border-radius: 10px;
+      width: 90vw;
+
+      label {
+        padding: 10px 0;
+        font-size: 28px;
+
+        input {
+          margin-left: 20px;
+          background-color: #fff;
+          border: none;
+          padding: 15px;
+          border-radius: 10px;
+        }
+
+        &:nth-child(2) {
+          input {
+            margin-left: 16px;
+          }
+        }
+      }
+
+      .btn {
+        padding: 8px 0;
+        margin-top: 20px;
+        background-color: #D94953;
+        color: #fff;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+/* 用户注册页面 结束 */
+
+/*用户登陆页面 开始*/
+.login_wrapper {
+  height: 100%;
+  background-color: #fff;
+  position: relative;
+
+  .confim_head {
+    background-color: #fff;
+    
+    span {
+      i {
+        color: #009fff;
+      }
+    }
+    h1 {
+      color: #009fff;
+    }
+  }
+
+  .form_group {
+    position: absolute;
+    top: 300px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      padding: 80px 30px;
+      background-color: #EAEAEA;
+      border-radius: 10px;
+      width: 90vw;
+
+      input{
+        width: 100%;
+        background-color: #fff;
+        border: none;
+        padding: 15px 50px;
+        border-radius: 10px;
+
+        &:first-child {
+          margin-bottom: 40px;
+        }
+      }
+
+      .btn {
+        padding: 8px 0;
+        margin-top: 30px;
+        background-color: green;
+        color: #fff;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+/*用户登陆页面 结束*/
+
+/* 我的地址页 开始*/
+.myaddress_container {
+  padding: 75.08px 0  90px 0;
+  
+  .address_group {
+    
+    .address_item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px;
+      background-color: #fff;
+      margin-bottom: 15px;
+
+      .address_detail {
+        .receiver_info {
+          font-size: 30px;
+
+          .name {
+            padding-right: 20px;
+            font-weight: 700;
+          }
+          .phone {
+            color: #666;
+          }
+        }
+
+        .address_info {
+          margin-top: 5px;
+          font-size: 24px;
+          color: #666;
+        }
+      }
+
+      .operate {
+
+        .iconfont {
+          color: #ccc;
+          font-size: 30px;
+
+          &.icon-cha {
+            padding-left: 30px;
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90px;
+    background-color: #fff;
+    color: #009fff;
+    font-size: 28px;
+
+    .icon-jia {
+      font-size: 40px;
+      margin-right: 12px;
+    }
+  }
+}
+/*我的地址页 结束 */
+
+/* 添加地址页 开始 */
+.add_address {
+  .content {
+    padding-top: 75.08px;
+
+    .form {
+      padding: 25px;
+      background-color: #fff;
+
+      .linkman {
+        span {
+          display: inline-block;
+          width: 120px;
+          font-size: 25px;
+          font-weight: 700;
+        }
+
+        input {
+          padding: 24px 0;
+          outline: none;
+          border: none;
+          border-bottom: 1px solid #ccc;
+        }
+      }
+    }
+
+    .form_btn {
+      padding: 40px 25px;
+
+      .btn {
+          width: 100%;
+          padding: 15px 0;
+          background-color: #00d762;
+          border: none;
+          border-radius: 5px;
+          color: #fff;
+          font-size: 30px;
+          font-weight: 700;
+          outline: none;
+      }
+    }
+  }
+}
+
+
+/* 添加地址页 结束 */
