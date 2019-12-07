@@ -18,6 +18,10 @@ function ShopFoodList(props) {
     const scrollerEl = scroller.current;
     const scrollerChildren = scroller.current.children;
 
+    if (!scrollerChildren[index]) { // 不存在直接退出
+      return;
+    }
+
     let targetTop = scrollerChildren[index].offsetTop;
     let lastTopValue;
 
@@ -106,7 +110,8 @@ function ShopFoodList(props) {
               {
                 store_categories && store_categories.map((cat, i) => {
                   return (
-                    <li className={i === currentMenuIndex ? 'menu_item active' : 'menu_item'} data-index={i} onClick={handleChangeMenu} key={i}>{cat.cat_name}</li>
+                    !cat.children.length ? '' :
+                    (<li className={i === currentMenuIndex ? 'menu_item active' : 'menu_item'} data-index={i} onClick={handleChangeMenu} key={i}>{cat.cat_name}</li>)
                   )
                 })
               }
@@ -117,6 +122,7 @@ function ShopFoodList(props) {
               {
                 store_categories && store_categories.map((cat, i) => {
                   return (
+                    !cat.children.length ? '' :
                     <dl key={i}>
                       <dt>
                         <div className='food_title'>
@@ -132,7 +138,7 @@ function ShopFoodList(props) {
                             <dd key={index}>
                               <div className='food_detail_wrapper'>
                                 <span className='food_pic'>
-                                  <img src={item.food_pic} alt="" />
+                                  <img src={item.food_pic || 'http://pic.51yuansu.com/pic3/cover/01/55/70/594c83ce7e5b3_610.jpg'} alt="" />
                                 </span>
                                 <section className='food'>
                                   <div className="food_detail">
@@ -156,7 +162,7 @@ function ShopFoodList(props) {
                                           </>
                                         )
                                       }
-                                      <a data-name={item.food_name} data-id={item.food_id} data-pic={item.food_pic} data-price={item.food_price} onClick={handleAddToCart}>
+                                      <a data-name={item.food_name} data-id={item.food_id} data-pic={item.food_pic || 'http://pic.51yuansu.com/pic3/cover/01/55/70/594c83ce7e5b3_610.jpg'} data-price={item.food_price} onClick={handleAddToCart}>
                                         <i className="iconfont icon-add"></i>
                                       </a>
                                     </span>

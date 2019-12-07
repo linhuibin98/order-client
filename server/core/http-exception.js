@@ -17,7 +17,16 @@ class ParameterException extends HttpException {
   }
 }
 
+class DBException extends HttpException {
+  constructor(msg, errorCode = 40001, code = 400) {
+    super(msg);
+    this.errorCode = errorCode;
+    this.code = code;
+  }
+}
+
 module.exports = {
   HttpException,
-  ParameterException
+  ParameterException,
+  DBException
 }

@@ -1,4 +1,17 @@
 const { Schema, model } = require('mongoose');
+const crypto = require('crypto');
+
+const secret = 'lhblinhibin';
+
+let OrderSchema = new Schema({
+  num: String,
+  time: Date,
+  storeId: Schema.Types.ObjectId,
+  storeName: String,
+  storeLogoUrl: String,
+  foods: Array, 
+  price: Number
+});
 
 let goodsSchema = new Schema({
   food_id: {
@@ -35,7 +48,15 @@ let categoriesSchema = new Schema({
   children: [goodsSchema]
 })
 
-let storeSchema = new Schema({
+let storeSchema = new Schema({ 
+  phone: String,
+  password: {
+    type: String,
+    set(val) {
+      let hashPass = crypto.createHash('sha1', secret).update(val).digest('hex');
+      return hashPass;
+    }
+  },
   store_logo_url: String,
   store_pic: {
     type: String,
@@ -60,7 +81,8 @@ let storeSchema = new Schema({
   },
   store_notice: String,
   store_goods: [goodsSchema],
-  store_categories: [categoriesSchema]
+  store_categories: [categoriesSchema],
+  orders: [OrderSchema]
 });
 
 const collectionModel = model('store', storeSchema);

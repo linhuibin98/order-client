@@ -157,7 +157,7 @@ router.post('/order', async (ctx, next) => {
   let user = await UserModel.findById(userId);
   let store = await storeModel.findById(storeId);
 
-  user.user_order.unshift({
+  const order = {
     num: tradeNo(),
     time: new Date().getTime(),
     storeId,
@@ -165,13 +165,20 @@ router.post('/order', async (ctx, next) => {
     storeLogoUrl,
     foods,
     price
-  });
+  }
+
+  // 用户保存订单
+  user.user_order.unshift(order);
+
+  // 店铺保存订单
+  store.orders.unshift(order);
 
   user.save(err => {
     if (err) throw err;
     console.log('生成订单成功');
   });
 
+  // 订单上的商品销量增加
   foods.forEach(f => {
     store.store_goods.forEach(g => {
       if (f.id == g.food_id) {
@@ -187,6 +194,7 @@ router.post('/order', async (ctx, next) => {
     })
   })
 
+  // 店铺订单数+1
   store.store_sales += 1;
 
   store.save(err => {

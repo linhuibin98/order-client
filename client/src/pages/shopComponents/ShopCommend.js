@@ -14,7 +14,7 @@ function Shopcommend(props) {
             foods_commend && foods_commend.map(food => {
               return (
                 <div className='recommend_item' key={food['_id']}>
-                  <img src={food.food_pic} alt="" />
+                  <img src={food.food_pic || 'http://pic.51yuansu.com/pic3/cover/01/55/70/594c83ce7e5b3_610.jpg'} alt="" />
                   <div className='food_detail'>
                     <p className='food_name'>{food.food_name}</p>
                     <p className='food_data'>月售{food.food_sales} 好评率100%</p>
@@ -29,7 +29,7 @@ function Shopcommend(props) {
                             </>
                           )
                         }
-                        <a data-name={food.food_name} data-id={food.food_id} data-price={food.food_price} data-pic={food.food_pic}  onClick={handleAddToCart}><i className='iconfont icon-add'></i></a>
+                        <a data-name={food.food_name} data-id={food.food_id} data-price={food.food_price} data-pic={food.food_pic || 'http://pic.51yuansu.com/pic3/cover/01/55/70/594c83ce7e5b3_610.jpg'}  onClick={handleAddToCart}><i className='iconfont icon-add'></i></a>
                       </span>
                     </div>
                   </div>
