@@ -134,8 +134,6 @@ router.post('/user/logout', async (ctx, next) => {
   await next();
 })
 
-
-
 // 店铺添加商品
 router.post('/store/goods/add/:id', async (ctx, next) => {
   let { id } = ctx.params;
@@ -414,6 +412,39 @@ router.delete('/store/goods/:id', async (ctx, next) => {
   }
 
 
+  await next();
+})
+
+// 获取订单
+router.get('/store/order/:id', async (ctx, next) => {
+  const { id } = ctx.params;
+  let { page, limit } = ctx.request.query;
+  page = parseInt(page);
+  limit = parseInt(limit);
+  const store = await StoreModel.findById(id);
+  const orders = store.orders;
+  const total = orders.length;
+  let start = (page - 1) * limit;
+
+  let end = start + limit;
+
+  if (end > total) { // 大于总数量时，等于
+    end = total;
+  }
+
+  const data = orders.slice(start, end);
+
+  ctx.body = {
+    errorCode: 0,
+    message: 'ok',
+    pagination: {
+      page,
+      limit,
+      total
+    },
+    data
+  }
+  
   await next();
 })
 

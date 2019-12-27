@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import BottomTabBar from '../components/BottomTabBar';
+import { getAvatar } from '../api';
+import actions from '../store/actions';
 
 class User extends Component {
 
@@ -22,16 +24,30 @@ class User extends Component {
     });
   }
 
+  historyToInfo() {
+    this.props.history.push('/user/info');
+  }
+
+  componentDidMount() {
+    let { userInfo: { id }, updateAvatar } = this.props;
+    (async () => {
+      if (id) {
+        let res = await getAvatar(id);
+        updateAvatar(res.data.avatar);
+      }
+    })()
+  }
+
   render() {
-    let { userInfo: { username, phone } } = this.props;
+    let { userInfo: { username, phone }, avatar } = this.props;
 
     return (
       <div className='user_container'>
         {
           username ? (
-            <header className='user_detail'>
+            <header className='user_detail' onClick={this.historyToInfo.bind(this)}>
               <div className='profile'>
-                <div className='avatar'><img src="https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed" alt="" /></div>
+                <div className='avatar'><img src={avatar || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed"} alt="" /></div>
                 <div className='profile_text'><span>{username}</span><span>{phone}</span></div>
               </div>
               <span className='split'>></span>
@@ -93,4 +109,12 @@ class User extends Component {
   }
 }
 
-export default withRouter(connect(state => ({ ...state.user }))(User));
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    updateAvatar: (url) => {
+      dispatch(actions.user.userChangeAvatar(url));
+    }
+  }
+}
+
+export default withRouter(connect(state => ({ ...state.user }), mapDispatchToProps)(User));

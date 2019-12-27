@@ -28,7 +28,7 @@
         <el-button type="danger" @click="confimDelete">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog :visible.sync="dialogFormVisible" width="80%" @closed="dialogCloseEvent">
+    <el-dialog :visible.sync="dialogFormVisible" width="50%" @closed="dialogCloseEvent">
       <div slot="title" class="dialog-title">
         <h2 style="text-align: center;">{{ dialogTitle }}</h2>
       </div>
@@ -215,7 +215,7 @@ export default {
 
 <style lang="scss">
 .goods_container {
-  margin: 30px;
+  margin: 15px 30px;
 
   .add {
     text-align: right;
@@ -223,6 +223,9 @@ export default {
 
   .title {
     text-align: center;
+    h1 {
+      margin-top: 10px;
+    }
   }
 
   .cell {

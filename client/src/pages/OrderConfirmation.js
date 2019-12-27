@@ -62,7 +62,8 @@ function OrderConfirmation(props) {
           storeName: shopData.store_name,
           storeLogoUrl: shopData.store_logo_url,
           foods: cartList,
-          price: order.allPrice
+          price: order.allPrice,
+          address
         }
         // 生成新的订单
         let res = await generateOrder(sendData);

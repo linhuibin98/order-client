@@ -4,6 +4,7 @@ const storeModel = require('../../models/StoreModel');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const tradeNo = require('../../lib/generateOrderNum');
+const upload = require('../../middleWares/multer');
 
 const router = new Router({
   prefix: '/api/public/v1'
@@ -22,7 +23,7 @@ router.post('/user/login', async (ctx, next) => {
       message: '用户不存在,或账号密码错误'
     }
   } else {
-    let { username, user_phone: phone, _id: id } = user;
+    let { username, user_phone: phone, _id: id, currentAvatar: avatar } = user;
     let userInfo = {
       username,
       phone,
@@ -32,6 +33,7 @@ router.post('/user/login', async (ctx, next) => {
       errorCode: 0,
       message: '登录成功',
       userInfo,
+      avatar,
       token: jwt.sign(userInfo, secret, {
         expiresIn: 60
       })
@@ -50,7 +52,7 @@ router.get('/validate/token', async (ctx, next) => {
         message: 'token失效了'
       }
     } else {
-      let { username, phone, id } = decode;
+      let { username, phone, id, avatar } = decode;
       let sendDada = {
         username,
         phone,
@@ -152,7 +154,7 @@ router.get('/order/:id', async (ctx, next) => {
 
 // 生成订单
 router.post('/order', async (ctx, next) => {
-  let { data: { userId, storeId, storeName, storeLogoUrl, foods, price } } = JSON.parse(ctx.request.rawBody);
+  let { data: { userId, storeId, storeName, storeLogoUrl, foods, price, address: { name, phone, address } } } = JSON.parse(ctx.request.rawBody);
 
   let user = await UserModel.findById(userId);
   let store = await storeModel.findById(storeId);
@@ -164,7 +166,10 @@ router.post('/order', async (ctx, next) => {
     storeName,
     storeLogoUrl,
     foods,
-    price
+    price,
+    userAddress: address,
+    userName: name,
+    userPhone: phone
   }
 
   // 用户保存订单
@@ -209,5 +214,44 @@ router.post('/order', async (ctx, next) => {
 
   await next();
 });
+
+// 更改头像
+router.post('/user/avatar', upload.single('avatar'), async (ctx, next) => {
+  const { id } = ctx.request.query;
+  const user = await UserModel.findById(id);
+
+  const filePath = 'http://127.0.0.1:8080/uploads/avatars/' + ctx.req.file.filename;
+
+  user.currentAvatar = filePath;
+
+  user.historyAvatar.unshift(filePath);
+
+  if (user.historyAvatar.length > 5) {
+    user.historyAvatar.length = 5;
+  }
+  
+  user.save(err => {
+    if (err) throw err;
+  })
+
+  ctx.body = {
+    errorCode: 0,
+    message: 'ok',
+    avatar: user.currentAvatar
+  }
+  await next();
+})
+
+// 获取头像
+router.get('/user/avatar/:id', async (ctx, next) => {
+  let { id } = ctx.params;
+  const user = await UserModel.findById(id);
+  ctx.body = {
+    errorCode: 0,
+    message: 'ok',
+    avatar: user.currentAvatar
+  }
+  await next();
+})
 
 module.exports = router;

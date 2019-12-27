@@ -7,7 +7,7 @@ axios.interceptors.request.use(config => {
   // 请求头添加token
   config.headers.Authorization = `${getStorage('token')}`;
   return config;
-},error => {
+}, error => {
   return Promise.reject(error);
 });
 
@@ -24,7 +24,7 @@ export function getShopDetail(id) {
 // 注册
 export function userRegister(opts) {
   return axios.post('/user/register', {
-    data:{
+    data: {
       ...opts
     }
   })
@@ -66,4 +66,18 @@ export function reqAddAddress(data) {
 //获取收货地址
 export function reqGetAddress(id) {
   return axios.get(`/address/${id}`);
+}
+
+// 用户更改头像
+export function uploadAvatar({ data, id }) {
+  return axios.post(`/user/avatar/?id=${id}`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+  })
+}
+
+// 获取用户头像
+export function getAvatar(id) {
+  return axios.get(`/user/avatar/${id}`);
 }

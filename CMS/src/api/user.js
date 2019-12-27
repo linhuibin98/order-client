@@ -76,3 +76,15 @@ export function addGoods({ id, data }) {
     data
   })
 }
+
+// 获取订单
+export function getOrders({ id, page, limit }) {
+  return request({
+    url: `/store/order/${id}`,
+    method: 'get',
+    params: {
+      page,
+      limit
+    }
+  })
+}

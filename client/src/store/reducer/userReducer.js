@@ -6,14 +6,16 @@ let initialState = {
   isLogin: false,
   address: [],
   orders: [],
-  selectAddress: ''
+  selectAddress: '',
+  avatar: ''
 }
 
 const reducer = handleActions({
   [TYPES.USER_LOGIN]: (state, action) => {
     return {
       ...state,
-      userInfo: action.payload
+      userInfo: action.payload.userInfo,
+      avatar: action.payload.avatar
     }
   },
   [TYPES.USER_VALIDATE]: (state, action) => {
@@ -43,6 +45,10 @@ const reducer = handleActions({
   [TYPES.USER_SELECT_ADDRESS]: (state, action) => ({
     ...state,
     selectAddress: action.payload
+  }),
+  [TYPES.USER_CHANGE_AVATAR]: (state, action) => ({
+    ...state,
+    avatar: action.payload
   })
 }, initialState);
 

@@ -182,6 +182,8 @@
     background-color: #00a8ff;
 
     .header_address {
+      display: flex;
+      align-items: center;
       font-size: 30px;
       color: #fff;
       padding-bottom: 25px;
@@ -192,13 +194,16 @@
       }
 
       .address_name {
-        max-width: 8em;
+        display: inline-block;
+        max-width: 6em;
         font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .icon_trig {
         position: relative;
-        top: 15px;
         left: 10px;
         width: 5px;
         height: 5px;

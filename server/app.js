@@ -12,8 +12,10 @@ app.use(catchError());
 app.use(cors());
 app.use(connectDB());
 app.use(bodyParser());
-app.use(staticMiddleware(path.resolve(__dirname, 'static')));
+app.use(staticMiddleware(path.resolve(__dirname, './static')));
 app.use(registerRouter());
+
+
 
 app.listen(8080, () => {
   console.log('server is runing at port 8080');

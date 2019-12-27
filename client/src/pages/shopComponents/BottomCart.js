@@ -13,6 +13,8 @@ function BottomCart(props) {
   cartList.forEach(item => {
     allPrice += parseFloat(item.price) * item.num;
   })
+  // 总金额保留两位小数
+  allPrice = allPrice.toFixed(2);
 
   function handleClickPay() {
     if (isLogin) {//已经登陆，跳转到订单页

@@ -10,7 +10,10 @@ let OrderSchema = new Schema({
   storeName: String,
   storeLogoUrl: String,
   foods: Array, 
-  price: Number
+  price: Number,
+  userName: String,
+  userPhone: String,
+  userAddress: String
 });
 
 let userSchema = new Schema({
@@ -30,6 +33,8 @@ let userSchema = new Schema({
       return hashPass;
     }
   },
+  currentAvatar: String,
+  historyAvatar: Array,
   user_address: [{
     name: String,
     phone: String,

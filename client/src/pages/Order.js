@@ -10,8 +10,8 @@ class Order extends Component {
     super(props);
   }
 
-  handleClickReOrder() {
-    this.props.history.push('/shop/5dd292a8b077520c2839aa0b')
+  handleClickReOrder(id) {
+    this.props.history.push(`/shop/${id}`);
   }
 
 
@@ -47,7 +47,7 @@ class Order extends Component {
                       <div className='price'>￥{order.price}</div>
                     </Link>
                     <div className="order_operate">
-                      <button onClick={this.handleClickReOrder.bind(this)}>再来一单</button>
+                      <button onClick={this.handleClickReOrder.bind(this, order.storeId)}>再来一单</button>
                     </div>
                   </div>
                 </div>

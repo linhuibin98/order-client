@@ -10,7 +10,10 @@ let OrderSchema = new Schema({
   storeName: String,
   storeLogoUrl: String,
   foods: Array, 
-  price: Number
+  price: Number,
+  userName: String,
+  userPhone: String,
+  userAddress: String
 });
 
 let goodsSchema = new Schema({

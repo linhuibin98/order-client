@@ -3,30 +3,58 @@ import { getStoreList } from '../api/index';
 import { Link } from 'react-router-dom';
 import Stars from '../components/Stars';
 import  BottomTabBar from '../components/BottomTabBar';
+import { connect } from 'react-redux';
+import { getStorage } from '../util/storage'
 
 class Food extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      storeList: []
+      storeList: [],
+      currentAddr: ''
     };
   }
 
   async componentDidMount() {
+    let { userInfo: { id } } = this.props;
     let res = await getStoreList();
+    let address = getStorage('address');
+
+    let currentAddr = '';
+
+    if (address[id]) {
+      currentAddr = address[id].address;
+    }
+
     this.setState({
-      storeList: res.data.data
+      storeList: res.data.data,
+      currentAddr
     })
+  }
+
+  handleAddress() {
+    let { isLogin, history, location } = this.props;
+    if (!isLogin) {
+      return history.push({
+        pathname: '/user/login',
+        state: { from: location.pathname }
+      })
+    } else {
+      return history.push({
+        pathname: '/user/address/select',
+        state: { from: location.pathname }
+      })
+    }
   }
 
   render() {
     let { storeList } = this.state;
-    return (
+    return ( 
       <div className='home_container'>
         <header className='home_header'>
-          <div className='header_address'>
+          <div className='header_address' onClick={this.handleAddress.bind(this)}>
             <i className='iconfont icon-zuobiao'></i>
-            <span className='address_name'>三元里</span>
+            <span className='address_name'>{ this.state.currentAddr || '添加地址' }</span>
             <i className='icon_trig'></i>
           </div>
           <Link to='/search' className="search_input">
@@ -78,4 +106,4 @@ class Food extends Component {
 }
 
 
-export default Food;
+export default connect(state => ({ ...state.user }))(Food);

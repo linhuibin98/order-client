@@ -20,6 +20,10 @@ function App(props) {
       await routrEachValidateToken();
 
       let unlisten = history.listen(async (location, action) => {
+        // 路由拦截
+        if (location.pathname === '/user/avatar' && action === 'POP') {
+          history.push('/user');
+        }
         await routrEachValidateToken();
       });
     })()
