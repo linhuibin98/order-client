@@ -22,7 +22,7 @@ class Food extends Component {
 
     let currentAddr = '';
 
-    if (address[id]) {
+    if (id && address[id]) {
       currentAddr = address[id].address;
     }
 
