@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getStorage } from '../util/storage';
 
-axios.defaults.baseURL = 'http://127.0.0.1/api/public/v1';
+axios.defaults.baseURL = 'http://118.31.2.223/api/public/v1';
 
 axios.interceptors.request.use(config => {
   // 请求头添加token
