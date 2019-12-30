@@ -8,7 +8,7 @@ function MyAddress(props) {
   
   useEffect(() => {
     getAddress(userInfo.id);
-  }, []);
+  }, [getAddress, userInfo.id]);
 
   function handleGoBack() {
     history.goBack();

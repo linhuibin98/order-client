@@ -1,37 +1,57 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './App.less';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import routes from './routes';
 import { validateToken } from './api';
 import actions from './store/actions/userActions';
+import formatSearch from './util/formatSearch';
+import { setStorage } from './util/storage';
 
 function App(props) {
-  let { validate, isLogin, history } = props;
-  
+  let { validate, isLogin, history, location } = props;
+
   useEffect(() => {
     (async () => {
       async function routrEachValidateToken() {
         let res = await validateToken();
-        if (res.status === 200) {
-          validate(res);
+        if (res.data.errorCode === 0) {
+          let { token, userInfo } = res.data;
+          setStorage('token', token);
+          validate({
+            userInfo: userInfo,
+            isLogin: true
+          });
+          return true;
+        } else {// token失效, 清除基本信息
+          validate({
+            userInfo: {},
+            isLogin: false
+          })
+          return false;
         }
       }
       await routrEachValidateToken();
 
-      let unlisten = history.listen(async (location, action) => {
+      history.listen(async (location, action) => {
         // 路由拦截
-        if (location.pathname === '/user/avatar' && action === 'POP') {
+        let isLogin = await routrEachValidateToken();
+        let path = location.pathname;
+
+        let params = formatSearch(location.search);
+        let toPath = params['redirect'] || '/';
+
+        if (path === '/user/login' && isLogin) {
+          history.replace(toPath);
+        }
+
+        if (path === '/user/avatar' && action === 'POP') {
           history.push('/user');
         }
-        await routrEachValidateToken();
+        
       });
     })()
-  }, []);
-
-  // if (location.pathname === '/user/login' && isLogin) {
-  //   history.push('/order');
-  // }
+  }, [history, validate]);
 
   return (
     <Switch>
@@ -43,7 +63,7 @@ function App(props) {
                 ? <route.component {...props} />
                 : (isLogin ? <route.component {...props} /> : <Redirect to={{
                   pathname: '/user/login',
-                  state: { from: props.location.pathname }
+                  search: `?redirect=${location.pathname}`
                 }} />)
             )} />
           )
@@ -56,7 +76,7 @@ function App(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     validate: (data) => {
-      dispatch(actions.userValidate(data))
+      return dispatch(actions.userValidate(data));
     }
   }
 }

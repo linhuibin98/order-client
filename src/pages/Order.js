@@ -4,21 +4,24 @@ import BottomTabBar from '../components/BottomTabBar';
 import { connect } from 'react-redux';
 import formateDate from '../util/formatDate';
 import actions from '../store/actions';
+import { requestGetOrders } from '../api';
+import Toast from '../components/toast';
 
 class Order extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   handleClickReOrder(id) {
     this.props.history.push(`/shop/${id}`);
   }
 
-
-  componentDidMount() {
+  async componentDidMount() {
     let { userInfo: { id }, getOrders} = this.props;
     // 获取列表
-    getOrders(id);
+    let result = await requestGetOrders(id);
+    if (result.status === 200 && result.data.errorCode === 0) {
+      getOrders(result.data.orders);
+    } else {
+      Toast.error(result.data.message);
+    }
   }
 
   render() {

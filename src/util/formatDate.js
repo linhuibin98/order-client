@@ -3,7 +3,7 @@ function paddZero(num) {
 }
 
 export default function formatDate(date) {
-  date = date && new Date(date) || new Date();
+  date = (date && new Date(date)) || new Date();
   let y = date.getFullYear(),
       m = date.getMonth() + 1,
       d = date.getDate(),

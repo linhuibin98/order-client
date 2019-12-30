@@ -73,7 +73,7 @@ class Food extends Component {
                 <li className='merchant_item' key={store._id}>
                   <Link to={`/shop/${store._id}`} className='merchant_detail'>
                     <div className='left_logo'>
-                      <img src={store.store_logo_url} />
+                      <img src={store.store_logo_url} alt='logo' />
                     </div>
                     <div className='text_detail'>
                       <div className='name'>

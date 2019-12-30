@@ -17,7 +17,7 @@ function AddressAdd(props) {
     let fromLocation = location.state && location.state.from;
 
     setFrom(fromLocation);
-  }, [])
+  }, [location.state, setFrom])
 
   function handleGoBack() {
     history.goBack();

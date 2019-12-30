@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function HotSearch(props) {
 
@@ -7,9 +7,9 @@ export default function HotSearch(props) {
   useEffect(() => {
     let searchList = window.localStorage.getItem('historySearchList');
     console.log(searchList);
-    searchList = searchList && window.JSON.parse(searchList) || [];
+    searchList = (searchList && window.JSON.parse(searchList)) || [];
     setHistorySearchList(searchList);
-  }, [])
+  }, []) 
 
   function handleClickClear() {
     window.localStorage.setItem('historySearchList', '');

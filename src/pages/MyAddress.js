@@ -12,7 +12,7 @@ function MyAddress(props) {
 
   useEffect(() => {
     getAddress(userInfo.id);
-  }, []);
+  }, [getAddress, userInfo.id]);
 
   return (
     <div className='myaddress_container'>

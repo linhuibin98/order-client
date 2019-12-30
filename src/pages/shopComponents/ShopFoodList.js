@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef } from 'react';
 import ShopCommend from "./ShopCommend";
 import { connect } from 'react-redux';
@@ -12,6 +13,7 @@ function ShopFoodList(props) {
 
   function handleChangeMenu(e) {
     let index = e.currentTarget.getAttribute('data-index');
+    // eslint-disable-next-line eqeqeq
     if (currentMenuIndex == index) return;
     setCurrentMenuIndex(parseInt(index));
 

@@ -7,10 +7,6 @@ import actions from '../store/actions';
 
 class User extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   handleClickRegister() {
     this.props.history.push('/user/register');
   }

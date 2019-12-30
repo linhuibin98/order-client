@@ -19,14 +19,10 @@ const reducer = handleActions({
     }
   },
   [TYPES.USER_VALIDATE]: (state, action) => {
-    let { userInfo: { username, phone, id },  isLogin} = action.payload
+    let { userInfo, isLogin} = action.payload
     return {
       ...state,
-      userInfo: {
-        username,
-        phone,
-        id
-      },
+      userInfo,
       isLogin
     }
   },

@@ -2,6 +2,7 @@
 
 export default function isCart(cartList, id) {
   let cartDetail = cartList.filter(item => {
+    // eslint-disable-next-line eqeqeq
     return item.id == id;
   })[0];
   return cartDetail;

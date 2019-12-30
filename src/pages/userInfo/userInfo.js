@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './userInfo.less';
 import { connect } from 'react-redux';
 import { setStorage } from '../../util/storage';

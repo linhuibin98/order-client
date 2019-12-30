@@ -43,7 +43,7 @@ function OrderConfirmation(props) {
       setOrder(o);
       setStorage('order', o);
     }
-  }, []);
+  }, [cartList, getAddress, setOrder, shopData.distribution_cost, shopData.store_name, userInfo.id]);
 
   function handleGoBack() {
     props.history.go(-1);

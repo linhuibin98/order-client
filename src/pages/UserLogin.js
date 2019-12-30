@@ -1,28 +1,16 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, { useRef, useEffect } from 'react';
 import Toast from '../components/toast';
 import actions from '../store/actions/userActions';
 import { connect } from 'react-redux';
+import formatSearch from '../util/formatSearch';
+import { setStorage } from '../util/storage';
+import { requestUserLogin } from '../api';
 
 function UserLogin(props) {
-  let { isLogin, history, location, userLogin } = props;
+  let { history, location, userLogin, isLogin } = props;
 
   let usernameRef = useRef(null);
   let passwordRef = useRef(null);
-  let [from, setFrom] = useState('');
-
-  useEffect(() => {
-    let fromLocation = location.state && location.state.from;
-    if ((fromLocation === '/order' || fromLocation === '/user/address') && isLogin) {
-      history.push(fromLocation);
-    } else if(isLogin) {
-      history.push('/');
-    } else if (/(\/shop)/.test(fromLocation) && !isLogin) {
-      Toast.error('还未登陆, 请登陆...');
-      setFrom(fromLocation);
-    } else {
-      setFrom(fromLocation);
-    }
-  }, [isLogin])
 
   function handleGoBack() {
     history.go(-1);
@@ -30,19 +18,46 @@ function UserLogin(props) {
 
   async function handleClickLogin() {
     let username = usernameRef.current.value,
-        password = passwordRef.current.value;
+      password = passwordRef.current.value;
 
     if (username === '' || password === '') {
       return Toast.error('请输入账号密码');
     }
 
-    userLogin({
+    const result = await requestUserLogin({
       username,
-      password,
-      history,
-      from
+      password
     });
-  } 
+
+    // 登录成功
+    if (result.status === 200 && result.data.errorCode === 0) {
+      let params = formatSearch(location.search);
+      let toPath = params.redirect || '/';
+
+      let data = result.data;
+      Toast.success(data.message);
+      // 更新token
+      setStorage('token', data.token);
+      // userInfo  avata、信息存放在redux中
+      userLogin({
+        userInfo: data.userInfo,
+        avatar: data.avatar
+      });
+      history.replace(toPath);
+
+    } else {
+      Toast.error(result.data.message);
+    }
+  }
+
+  useEffect(() => {
+    if (isLogin) {
+      let params = formatSearch(location.search);
+      let toPath = params.redirect || '/';
+      history.replace(toPath);
+    }
+  }, [history, isLogin, location.search])
+
   return (
     <div className='login_wrapper'>
       <header className="confim_head">
@@ -53,8 +68,8 @@ function UserLogin(props) {
       </header>
       <section className='form_group'>
         <div className='form'>
-            <input ref={usernameRef} id='username' name='username' type="text" placeholder='请输入用户名或手机号'/>
-            <input ref={passwordRef} type="password" name="password" id="password" placeholder='请输入密码'/>
+          <input ref={usernameRef} id='username' name='username' type="text" placeholder='请输入用户名或手机号' />
+          <input ref={passwordRef} type="password" name="password" id="password" placeholder='请输入密码' />
           <button className='btn' onClick={handleClickLogin}>登陆</button>
         </div>
       </section>
@@ -65,11 +80,11 @@ function UserLogin(props) {
 const mapDispatchToProps = dispatch => {
   return {
     userLogin: (opts) => {
-      dispatch(actions.userLogin({
+      return dispatch(actions.userLogin({
         ...opts
       }))
     }
   }
 }
 
-export default connect(store => ({...store.user}), mapDispatchToProps)(UserLogin);
+export default connect(store => ({ isLogin: store.user.isLogin }), mapDispatchToProps)(UserLogin);

@@ -9,7 +9,7 @@ function OrderDetail(props) {
   useEffect(() => {
     let o = orderList[match.params.index]
     setOrder(o)
-  }, []);
+  }, [match.params.index, orderList, setOrder]);
 
   function handleGoBack () {
     props.history.go(-1);
