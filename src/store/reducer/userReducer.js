@@ -7,7 +7,6 @@ let initialState = {
   address: [],
   orders: [],
   selectAddress: '',
-  avatar: ''
 }
 
 const reducer = handleActions({
@@ -42,10 +41,6 @@ const reducer = handleActions({
     ...state,
     selectAddress: action.payload
   }),
-  [TYPES.USER_CHANGE_AVATAR]: (state, action) => ({
-    ...state,
-    avatar: action.payload
-  })
 }, initialState);
 
 export default reducer;

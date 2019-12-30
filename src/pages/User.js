@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import BottomTabBar from '../components/BottomTabBar';
-import { getAvatar } from '../api';
-import actions from '../store/actions';
+import { getStorage } from '../util/storage';
 
 class User extends Component {
 
@@ -14,9 +13,7 @@ class User extends Component {
   handleClickLogin() {
     this.props.history.push({
       pathname: '/user/login',
-      state: {
-        from: '/user'
-      }
+      search: '?redirect=/user'
     });
   }
 
@@ -24,26 +21,17 @@ class User extends Component {
     this.props.history.push('/user/info');
   }
 
-  componentDidMount() {
-    let { userInfo: { id }, updateAvatar } = this.props;
-    (async () => {
-      if (id) {
-        let res = await getAvatar(id);
-        updateAvatar(res.data.avatar);
-      }
-    })()
-  }
-
   render() {
-    let { userInfo: { username, phone }, avatar } = this.props;
-
+    let { userInfo: { username, phone, id }} = this.props;
+    let avatars = getStorage('avatar');
+    let avatar = (avatars && avatars[id]) || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed";
     return (
       <div className='user_container'>
         {
           username ? (
             <header className='user_detail' onClick={this.historyToInfo.bind(this)}>
               <div className='profile'>
-                <div className='avatar'><img src={avatar || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed"} alt="" /></div>
+                <div className='avatar'><img src={avatar} alt="" /></div>
                 <div className='profile_text'><span>{username}</span><span>{phone}</span></div>
               </div>
               <span className='split'>></span>
@@ -105,12 +93,4 @@ class User extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updateAvatar: (url) => {
-      dispatch(actions.user.userChangeAvatar(url));
-    }
-  }
-}
-
-export default withRouter(connect(state => ({ ...state.user }), mapDispatchToProps)(User));
+export default withRouter(connect(state => ({ ...state.user }))(User));

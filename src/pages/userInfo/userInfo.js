@@ -1,36 +1,37 @@
 import React from 'react';
 import './userInfo.less';
 import { connect } from 'react-redux';
-import { setStorage } from '../../util/storage';
+import { setStorage, getStorage } from '../../util/storage';
 import actions from '../../store/actions';
+import Toast from '../../components/toast';
 
 function UserInfo(props) {
-  let { userInfo, validateToken, history, avatar } = props;
+  let { userInfo, validateToken, history } = props;
 
   function handleQuit() {
     setStorage('token', "");
     validateToken({
-      data: {
-        errorCode: 1,
-        message: '登录实效, 请重新登陆...'
-      }
+      userInfo: {},
+      isLogin: false
     })
-    history.push({
-      pathname: '/user/login',
-      state: { from: '/user' }
-    })
+    history.push('/user');
+    Toast.success('退出登录成功...');
   }
 
   function historyToAvatar() {
     history.push('/user/avatar');
   }
 
+  let avatars = getStorage('avatar');
+
+  let avatar = (avatars && avatars[userInfo.id]) || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed";
+
   return (
     <div className='user_info_contaienr'>
       <div className='avatar item' onClick={ historyToAvatar }>
         <b>头像</b>
         <div className='avatar_img'>
-          <img src={ avatar || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed" } alt=""/>
+          <img src={ avatar } alt=""/>
           <span className='icon'>></span>
         </div>
       </div>

@@ -3,10 +3,10 @@ import "./avatarUpload.less";
 import Toast from "../../components/toast";
 import { uploadAvatar } from "../../api";
 import { connect } from "react-redux";
-import actions from '../../store/actions'
+import { setStorage, getStorage } from '.././../util/storage';
 
 function AvatarUpload(props) {
-  let { userInfo, history, updateAvatar } = props;
+  let { userInfo, history } = props;
   let file = useRef(null);
   let preImg = useRef(null);
 
@@ -53,8 +53,13 @@ function AvatarUpload(props) {
       });
 
       if (res.data.errorCode === 0) {
+        let id = userInfo.id;
         Toast.success('修改成功...');
-        updateAvatar(res.data.avatar);
+        let avatars = getStorage('avatar');
+        setStorage('avatar', {
+          ...avatars,
+          [id]: res.data.avatar
+        })
         history.push('/user/info');
       }
     }
@@ -88,14 +93,6 @@ function AvatarUpload(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updateAvatar: (url) => {
-      dispatch(actions.user.userChangeAvatar(url));
-    }
-  }
-}
-
-export default connect(state => ({ userInfo: state.user.userInfo }), mapDispatchToProps)(
+export default connect(state => ({ userInfo: state.user.userInfo }))(
   AvatarUpload
 );

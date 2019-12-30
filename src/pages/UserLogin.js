@@ -3,7 +3,7 @@ import Toast from '../components/toast';
 import actions from '../store/actions/userActions';
 import { connect } from 'react-redux';
 import formatSearch from '../util/formatSearch';
-import { setStorage } from '../util/storage';
+import { setStorage, getStorage } from '../util/storage';
 import { requestUserLogin } from '../api';
 
 function UserLogin(props) {
@@ -34,14 +34,16 @@ function UserLogin(props) {
       let params = formatSearch(location.search);
       let toPath = params.redirect || '/';
 
-      let data = result.data;
-      Toast.success(data.message);
-      // 更新token
-      setStorage('token', data.token);
+      let { userInfo, avatar, message, token } = result.data;
+      Toast.success(message);
+      // 更新缓存中的token、avatar
+      let avatars = getStorage('avatar');
+      setStorage('token', token);
+      setStorage('avatar', { ...avatars, [userInfo.id]: avatar});
+
       // userInfo  avata、信息存放在redux中
       userLogin({
-        userInfo: data.userInfo,
-        avatar: data.avatar
+        userInfo
       });
       history.replace(toPath);
 
