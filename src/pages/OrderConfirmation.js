@@ -8,7 +8,7 @@ import actions from '../store/actions';
 import { Link } from 'react-router-dom';
 
 function OrderConfirmation(props) {
-  let { shopData, cartList, userInfo, updateCart, getAddress } = props;
+  let { shopData, cartList, userInfo, updateCart } = props;
 
   let [order, setOrder] = useState({});
   let [address, setAddress] = useState({});
@@ -19,7 +19,6 @@ function OrderConfirmation(props) {
 
     if (addressLocal[userInfo.id] && addressLocal[userInfo.id].name) {
       setAddress(addressLocal[userInfo.id]);
-      getAddress(addressLocal[userInfo.id]);
     }
 
     if (orderLocal && orderLocal.storeName) {
@@ -43,13 +42,12 @@ function OrderConfirmation(props) {
       setOrder(o);
       setStorage('order', o);
     }
-  }, [cartList, getAddress, setOrder, shopData.distribution_cost, shopData.store_name, userInfo.id]);
+  }, [cartList, setOrder, shopData.distribution_cost, shopData.store_name, userInfo.id]);
 
   function handleGoBack() {
-    props.history.go(-1);
-
     //退出订单页面, 清楚本地存储
     setStorage('order', {});
+    props.history.goBack();
   }
 
   function handleClickPay() {
@@ -160,9 +158,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(actions.shop.setCartList({
         ...opts
       }))
-    },
-    getAddress: val => {
-      dispatch(actions.user.userSelectAddress(val))
     }
   }
 }

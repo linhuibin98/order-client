@@ -4,7 +4,7 @@ import { reqAddAddress, reqGetAddress } from '../../api';
 import Toast from '../../components/toast';
 import { setStorage, getStorage } from '../../util/storage';
 
-const { userLogin, userValidate, userGetOrders, userAddAddress, userGetAddress, userSelectAddress } = createActions({
+const { userLogin, userValidate, userGetOrders, userAddAddress, userGetAddress } = createActions({
   [TYPES.USER_LOGIN]: payload => payload,
   [TYPES.USER_VALIDATE]: payload => payload,
   [TYPES.USER_GET_ORDERS]: payload => payload,
@@ -31,13 +31,6 @@ const { userLogin, userValidate, userGetOrders, userAddAddress, userGetAddress, 
     }
     return [];
   },
-  [TYPES.USER_SELECT_ADDRESS]: val => {
-    let { userId, CurrentAddress } = val;
-    let address = getStorage('address') || {};
-    address[userId] = CurrentAddress;
-    setStorage('address', address);
-    return val;
-  },
 });
 
 export default {
@@ -46,5 +39,4 @@ export default {
   userGetOrders,
   userAddAddress,
   userGetAddress,
-  userSelectAddress,
 }

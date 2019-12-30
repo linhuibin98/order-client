@@ -16,19 +16,10 @@ class Food extends Component {
   }
 
   async componentDidMount() {
-    let { userInfo: { id } } = this.props;
     let res = await getStoreList();
-    let address = getStorage('address');
-
-    let currentAddr = '';
-
-    if (address && address[id]) {
-      currentAddr = address[id].address;
-    }
 
     this.setState({
-      storeList: res.data.data,
-      currentAddr
+      storeList: res.data.data
     })
   }
 
@@ -48,13 +39,22 @@ class Food extends Component {
   }
 
   render() {
+    let { userInfo: { id } } = this.props;
     let { storeList } = this.state;
+    let address = getStorage('address');
+
+    let currentAddr = '';
+
+    if (address && address[id]) {
+      currentAddr = address[id].address;
+    } 
+
     return ( 
       <div className='home_container'>
         <header className='home_header'>
           <div className='header_address' onClick={this.handleAddress.bind(this)}>
             <i className='iconfont icon-zuobiao'></i>
-            <span className='address_name'>{ this.state.currentAddr || '添加地址' }</span>
+            <span className='address_name'>{ currentAddr || '添加地址' }</span>
             <i className='icon_trig'></i>
           </div>
           <Link to='/search' className="search_input">

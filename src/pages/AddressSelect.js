@@ -2,9 +2,10 @@ import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
+import { getStorage, setStorage } from '../util/storage';
 
 function MyAddress(props) {
-  let { history, addressList, getAddress, userInfo, setCurrentAddress } = props;
+  let { history, addressList, getAddress, userInfo } = props;
   
   useEffect(() => {
     getAddress(userInfo.id);
@@ -16,10 +17,11 @@ function MyAddress(props) {
 
   function selectAddress(e) {
     let index = e.currentTarget.getAttribute('data-index');
-    setCurrentAddress({
-      CurrentAddress: addressList[index],
-      userId: userInfo.id
-    });
+    let currentAddress = addressList[index];
+
+    let address = getStorage('address') || {};
+    address[userInfo.id] = currentAddress;
+    setStorage('address', address);
     history.goBack();
   }
 
@@ -66,9 +68,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getAddress: id => {
       dispatch(actions.user.userGetAddress(id))
-    },
-    setCurrentAddress: val => {
-      dispatch(actions.user.userSelectAddress(val));
     }
   }
 }

@@ -55,11 +55,9 @@ function AvatarUpload(props) {
       if (res.data.errorCode === 0) {
         let id = userInfo.id;
         Toast.success('修改成功...');
-        let avatars = getStorage('avatar');
-        setStorage('avatar', {
-          ...avatars,
-          [id]: res.data.avatar
-        })
+        let avatars = getStorage('avatar') || {};
+        avatars[id] = res.data.avatar;
+        setStorage('avatar', avatars);
         history.push('/user/info');
       }
     }

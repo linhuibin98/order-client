@@ -22,9 +22,9 @@ function UserInfo(props) {
     history.push('/user/avatar');
   }
 
-  let avatars = getStorage('avatar');
+  let avatars = getStorage('avatar') || {};
 
-  let avatar = (avatars && avatars[userInfo.id]) || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed";
+  let avatar = avatars[userInfo.id] || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed";
 
   return (
     <div className='user_info_contaienr'>

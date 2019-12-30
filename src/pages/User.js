@@ -23,8 +23,8 @@ class User extends Component {
 
   render() {
     let { userInfo: { username, phone, id }} = this.props;
-    let avatars = getStorage('avatar');
-    let avatar = (avatars && avatars[id]) || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed";
+    let avatars = getStorage('avatar') || {};
+    let avatar = avatars[id] || "https://cube.elemecdn.com/0/d0/dd7c960f08cdc756b1d3ad54978fdjpeg.jpeg?x-oss-process=image/format,webp/resize,w_90,h_90,m_fixed";
     return (
       <div className='user_container'>
         {

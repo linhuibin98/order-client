@@ -20,7 +20,7 @@ function BottomCart(props) {
     } else {// 未登陆，跳转到登录页
       history.push({
         pathname: '/user/login',
-        state: { from: location.pathname }
+        search: `?redirect=${location.pathname}`
       });
     }
   }
