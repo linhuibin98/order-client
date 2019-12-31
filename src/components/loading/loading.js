@@ -22,15 +22,31 @@ function createLoading() {
   const ref = React.createRef();
   ReactDOM.render(<Loading ref={ref} />, div);
 
+  const _eventPreventDefault = function (e) {
+    e.preventDefault();
+  };
+
   return {
     show() {
+      this.disablePageScroll();
       div.style.display = 'block';
+      window.document.body.appendChild(div);
     },
     close() {
       const timer = setTimeout(() => {
+        this.allowPageScroll();
         div.style.display = 'none';
         clearTimeout(timer);
       }, 500)
+    },
+    // loading时禁止用户滑屏
+    disablePageScroll() {
+      document.querySelector("html").style.overflow = "hidden";
+      document.addEventListener("touchmove", _eventPreventDefault, false);
+    },
+    allowPageScroll: function () {
+      document.querySelector("html").style.overflow = "auto";
+      document.removeEventListener("touchmove", _eventPreventDefault, false);
     }
   }
 }
