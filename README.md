@@ -1,8 +1,11 @@
 # 外卖系统、管理系统，包括前、后台
 
 - [外卖系统](https://github.com/linhuibin98/order-client)
-  - [预览地址](http://118.31.2.223): http://118.31.2.223
-
-- [后台](https://github.com/linhuibin98/order-server)
+  - [预览地址](http://118.31.2.223/client): http://118.31.2.223/client
 
 - [商家店铺管理系统](https://github.com/linhuibin98/order-cms)
+
+- [预览地址](http://118.31.2.223/cms): http://118.31.2.223/cms
+
+- [后台服务](https://github.com/linhuibin98/order-server)
+  - [接口文档]()
