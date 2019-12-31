@@ -4,8 +4,7 @@
   - [预览地址](http://118.31.2.223/client): http://118.31.2.223/client
 
 - [商家店铺管理系统](https://github.com/linhuibin98/order-cms)
-
-- [预览地址](http://118.31.2.223/cms): http://118.31.2.223/cms
+  - [预览地址](http://118.31.2.223/cms): http://118.31.2.223/cms
 
 - [后台服务](https://github.com/linhuibin98/order-server)
   - [接口文档]()
