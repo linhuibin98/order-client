@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import HotSearch from './searchComponents/HotSearch';
 
 export default class Search extends Component {
-
+ 
   handleClickGoBack() {
     window.history.go(-1);
   }

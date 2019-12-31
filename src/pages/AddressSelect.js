@@ -3,13 +3,24 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
 import { getStorage, setStorage } from '../util/storage';
+import { reqGetAddress } from '../api';
+import Toast from '../components/toast';
 
 function MyAddress(props) {
   let { history, addressList, getAddress, userInfo } = props;
   
   useEffect(() => {
-    getAddress(userInfo.id);
-  }, [getAddress, userInfo.id]);
+    (async () => {
+      const result = await reqGetAddress(userInfo.id);
+
+      if (result.status === 200 && result.data.errorCode === 0) {
+        getAddress(result.data.address);
+      } else {
+        Toast.error(result.data.message);
+      }
+    })()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleGoBack() {
     history.goBack();

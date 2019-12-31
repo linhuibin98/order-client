@@ -1,6 +1,6 @@
 import * as TYPES from '../action_types';
 import { createActions } from 'redux-actions';
-import { reqAddAddress, reqGetAddress } from '../../api';
+import { reqAddAddress } from '../../api';
 import Toast from '../../components/toast';
 import { setStorage, getStorage } from '../../util/storage';
 
@@ -23,14 +23,7 @@ const { userLogin, userValidate, userGetOrders, userAddAddress, userGetAddress }
     }
     return [];
   },
-  [TYPES.USER_GET_ADDRESS]: async id => {
-    let res = await reqGetAddress(id);
-
-    if (res.status === 200 && res.data.errorCode === 0) {
-      return res.data.address
-    }
-    return [];
-  },
+  [TYPES.USER_GET_ADDRESS]: payload => payload,
 });
 
 export default {

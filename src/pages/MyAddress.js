@@ -1,18 +1,30 @@
-import React, {useEffect} from 'react';
+﻿import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
+import { reqGetAddress } from '../api';
+import Toast from '../components/toast';
 
 function MyAddress(props) {
   let { history, addressList, getAddress, userInfo } = props;
-  
+
   function handleGoBack() {
     history.goBack();
   }
 
   useEffect(() => {
-    getAddress(userInfo.id);
-  }, [getAddress, userInfo.id]);
+    (async () => {
+      const result = await reqGetAddress(userInfo.id);
+
+      if (result.status === 200 && result.data.errorCode === 0) {
+        getAddress(result.data.address);
+      } else {
+        Toast.error(result.data.message);
+      }
+    })()
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='myaddress_container'>
@@ -46,7 +58,7 @@ function MyAddress(props) {
           })
         }
       </section>
-      <Link className='footer' to={location => ({pathname: '/user/address/add', state: {from: location.pathname}})}>
+      <Link className='footer' to={location => ({ pathname: '/user/address/add', state: { from: location.pathname } })}>
         <span className='iconfont icon-jia'></span>
         <p>新增收货地址</p>
       </Link>

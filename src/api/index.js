@@ -1,14 +1,28 @@
 import axios from 'axios';
 import { getStorage } from '../util/storage';
+import Loading from '../components/loading';
 
 axios.defaults.baseURL = 'http://118.31.2.223/api/public/v1';
 
 axios.interceptors.request.use(config => {
+  let {url} = config;
+
+  if (!url.includes('token')) {
+    Loading.show();
+  }
   // 请求头添加token
   config.headers.Authorization = `${getStorage('token')}`;
   return config;
 }, error => {
   return Promise.reject(error);
+});
+
+axios.interceptors.response.use(response => {
+  Loading.close();
+return response;
+},error => {
+// Do something with response error
+return Promise.reject(error);
 });
 
 // 获取店铺列表

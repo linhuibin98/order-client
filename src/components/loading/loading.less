@@ -1,0 +1,34 @@
+@keyframes loadingIcon {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon_wrapper {
+position: absolute;
+left: 50%;
+top: 50%;
+z-index: 999;
+transform: translate(-50%, -80%);
+width: 33vw;
+height: 40vw;
+background-color: #ccc;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+  .loading {
+    font-size: 40px;
+    animation: loadingIcon 1s infinite;
+  }
+
+  p {
+    padding: 10px 0;
+    color: #fff;
+    font-size: 30px;
+  }
+}
