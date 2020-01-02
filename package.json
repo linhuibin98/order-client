@@ -84,7 +84,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
-  "homepage": ".",
+  "homepage": "/order-client",
   "eslintConfig": {
     "extends": "react-app"
   },
