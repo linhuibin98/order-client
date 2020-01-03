@@ -3,29 +3,36 @@ import { Link, withRouter } from 'react-router-dom';
 import BottomTabBar from '../components/BottomTabBar';
 import { connect } from 'react-redux';
 import formateDate from '../util/formatDate';
-import actions from '../store/actions';
 import { requestGetOrders } from '../api';
 import Toast from '../components/toast';
 
 class Order extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      orderList: []
+    }
+  }
 
   handleClickReOrder(id) {
     this.props.history.push(`/shop/${id}`);
   }
 
   async componentDidMount() {
-    let { userInfo: { id }, getOrders} = this.props;
+    let { userInfo: { id }} = this.props;
     // 获取列表
     let result = await requestGetOrders(id);
     if (result.status === 200 && result.data.errorCode === 0) {
-      getOrders(result.data.orders);
+      this.setState({
+        orderList: result.data.orders
+      })
     } else {
       Toast.error(result.data.message);
     }
   }
 
   render() {
-    let { orderList } = this.props;
+    let { orderList } = this.state;
 
     return (
       <div className='order_container'>
@@ -41,11 +48,11 @@ class Order extends Component {
                       <div className='trade'>
                         <Link className='name' to={`/shop/${order.storeId}`}>{order.storeName}</Link>
                         <div className="spilt">></div>
-                        <div className='arrive'>已送达</div>
+                        <div className='arrive'>已送达</div> 
                       </div>
                       <div className="order_time">{formateDate(order.time)}</div>
                     </div>
-                    <Link className="foods_detail" to={`/order_detail/${index}`}>
+                    <Link className="foods_detail" to={`/order_detail/${order.storeId}/${order.num}`}>
                       <div className='name'><div className='n'>{order.foods[0].name}</div><div className='num'>等{ order.foods.length }件商品</div></div>
                       <div className='price'>￥{order.price}</div>
                     </Link>
@@ -64,12 +71,4 @@ class Order extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    getOrders: id => {
-      dispatch(actions.user.userGetOrders(id))
-    }
-  }
-}
-
-export default withRouter(connect( state => ({ orderList: state.user.orders, userInfo: state.user.userInfo }), mapDispatchToProps)(Order));
+export default withRouter(connect( state => ({ orderList: state.user.orders, userInfo: state.user.userInfo }))(Order));

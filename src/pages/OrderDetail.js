@@ -1,15 +1,23 @@
 import React, {useState, useEffect} from "react";
-import { connect } from 'react-redux';
 import formateDate from '../util/formatDate';
+import { reqOrderDetail } from '../api';
 
 function OrderDetail(props) {
   let [order, setOrder] = useState({});
-  let { orderList, match } = props;
+  let { match } = props;
 
   useEffect(() => {
-    let o = orderList[match.params.index]
-    setOrder(o)
-  }, [match.params.index, orderList, setOrder]);
+    let { storeId, orderNum } = match.params;
+    console.log(1);
+    (async () => {
+      let result = await reqOrderDetail({storeId, orderNum});
+      console.log(result);
+      if (result.status === 200 && result.data.errorCode === 0) {
+        setOrder(result.data.order);
+      } 
+    })()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleGoBack () {
     props.history.go(-1);
@@ -35,4 +43,4 @@ function OrderDetail(props) {
   );
 }
 
-export default connect(state => ({orderList: state.user.orders}))(OrderDetail);
+export default OrderDetail;

@@ -1,8 +1,6 @@
-import user from './userActions';
-import shop from './shopActions'
+import user from './userActions'
 
 export default {
-  user,
-  shop
+  user
 }
 

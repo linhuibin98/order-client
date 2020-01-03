@@ -70,6 +70,11 @@ export function requestGetOrders(id) {
   return axios.get(`/order/${id}`)
 }
 
+// 订单详情
+export function reqOrderDetail({ storeId, orderNum }) {
+  return axios.get(`/order/detail/${storeId}/${orderNum}`)
+}
+
 //添加收货地址
 export function reqAddAddress(data) {
   return axios.post('/address/add', {

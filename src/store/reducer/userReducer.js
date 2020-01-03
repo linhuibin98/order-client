@@ -5,7 +5,6 @@ let initialState = {
   userInfo: {},
   isLogin: false,
   address: [],
-  orders: [],
 }
 
 const reducer = handleActions({
@@ -24,10 +23,6 @@ const reducer = handleActions({
       isLogin
     }
   },
-  [TYPES.USER_GET_ORDERS]: (state, action) => ({
-    ...state,
-    orders: action.payload
-  }),
   [TYPES.USER_ADD_ADDRESS]: (state, action) => ({
     ...state,
     address: action.payload

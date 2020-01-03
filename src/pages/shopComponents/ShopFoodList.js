@@ -3,13 +3,14 @@ import React, { useState, useRef } from 'react';
 import ShopCommend from "./ShopCommend";
 import { connect } from 'react-redux';
 import isCart from '../../util/isCart';
-import actions from '../../store/actions';
 
 function ShopFoodList(props) {
   // 当前菜单所在位置
   let [currentMenuIndex, setCurrentMenuIndex] = useState(0);
   let scroller = useRef(null);
-  const { shopData: { foods_commend, store_categories }, cartList, storeId } = props;
+  const { shopData, cartList } = props;
+
+  let { foods_commend, store_categories } = shopData;
 
   function handleChangeMenu(e) {
     let index = e.currentTarget.getAttribute('data-index');
@@ -74,10 +75,7 @@ function ShopFoodList(props) {
     });
 
     // 更新购物车数据
-    props.updataCartList({
-      id: storeId,
-      cartList: cloneCartList
-    });
+    props.updataCartList(cloneCartList);
   }
 
   function handleReduceCart(e) {
@@ -96,15 +94,12 @@ function ShopFoodList(props) {
     }
 
     // 更新购物车数据
-    props.updataCartList({
-      id: storeId,
-      cartList: cloneCartList
-    });
+    props.updataCartList(cloneCartList);
   }
 
   return (
     <>
-      {foods_commend && !foods_commend['length'] ? '' : <ShopCommend handleAddToCart={handleAddToCart} handleReduceCart={handleReduceCart} />}
+      {foods_commend && !foods_commend['length'] ? '' : <ShopCommend cartList={cartList} handleAddToCart={handleAddToCart} handleReduceCart={handleReduceCart} shopData={shopData} />}
       <div className="menuview_wrapper">
         <main className="menuview_main">
           <div className="left_menu">
@@ -187,12 +182,5 @@ function ShopFoodList(props) {
   )
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updataCartList: (cartList) => {
-      dispatch(actions.shop.setCartList(cartList));
-    }
-  }
-}
 
-export default connect(store => ({ ...store.shop }), mapDispatchToProps)(ShopFoodList);
+export default connect(store => ({ ...store.shop }))(ShopFoodList);

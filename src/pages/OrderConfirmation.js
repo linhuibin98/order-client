@@ -4,19 +4,24 @@ import { getStorage, setStorage } from "../util/storage";
 import Toast from '../components/toast';
 import Modal from '../components/modal';
 import { generateOrder } from '../api';
-import actions from '../store/actions';
 import { Link } from 'react-router-dom';
 
 function OrderConfirmation(props) {
-  let { shopData, cartList, userInfo, updateCart } = props;
-
   let [order, setOrder] = useState({});
   let [address, setAddress] = useState({});
 
-  useEffect(() => {
-    let orderLocal = getStorage('order');
-    let addressLocal = getStorage('address') || {};
+  let { userInfo, location } = props;
+  let shopData = (location.state && location.state.shopData) || getStorage('shopData');
 
+  let cart = getStorage('cartList');
+  let cartList = cart[shopData._id] || [];
+
+  let orderLocal = getStorage('order');
+  let addressLocal = getStorage('address') || {};
+
+  useEffect(() => {
+    // 本地保存数据
+    setStorage('shopData', shopData);
     if (addressLocal[userInfo.id] && addressLocal[userInfo.id].name) {
       setAddress(addressLocal[userInfo.id]);
     }
@@ -42,7 +47,8 @@ function OrderConfirmation(props) {
       setOrder(o);
       setStorage('order', o);
     }
-  }, [cartList, setOrder, shopData.distribution_cost, shopData.store_name, userInfo.id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function handleGoBack() {
     //退出订单页面, 清楚本地存储
@@ -69,7 +75,8 @@ function OrderConfirmation(props) {
         if (res.status === 200 && res.data.errorCode === 0) {
           Toast.success('支付成功');
           //清空购物车
-          updateCart({ id: shopData._id, cartList: [] });
+          cart[shopData._id] = [];
+          setStorage('cartList', cart);
           //退出订单页面, 清楚本地存储
           setStorage('order', {});
 
@@ -152,14 +159,4 @@ function OrderConfirmation(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updateCart: (opts) => {
-      dispatch(actions.shop.setCartList({
-        ...opts
-      }))
-    }
-  }
-}
-
-export default connect(store => ({ ...store.shop, userInfo: store.user.userInfo }), mapDispatchToProps)(OrderConfirmation);
+export default connect(store => ({ userInfo: store.user.userInfo }))(OrderConfirmation);

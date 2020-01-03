@@ -6,14 +6,17 @@ import ShopComment from "./shopComponents/ShopComment";
 import ShopInfo from "./shopComponents/ShopInfo";
 import BottomCart from './shopComponents/BottomCart';
 import { connect } from 'react-redux';
-import actions from '../store/actions';
-import { getStorage } from '../util/storage';
+import { getShopDetail } from '../api';
+import { getStorage, setStorage } from '../util/storage';
+import Toast from "../components/toast";
 
 class Shop extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentIndex: 0
+      currentIndex: 0,
+      cartList: [],
+      shopData: {}
     };
   }
 
@@ -29,21 +32,35 @@ class Shop extends Component {
     this.props.history.go(-1);
   }
 
-  componentDidMount() {
-    // 获取数据
-    let { id } = this.props.match.params;
-    this.props.setShopData(id);
-    let cart = getStorage('cartList') || {};
-    let cartList = cart[id] || [];
-    this.props.setCartList({
-      id,
+  updataCartList(cartList) {
+    const { id } = this.props.match.params;
+    this.setState({
       cartList
     });
+    let cart = getStorage('cartList') ||　{};
+    cart[id] = cartList;
+    setStorage('cartList', cart);
+  }
+
+  async componentDidMount() {
+    // 获取数据: 商品、购物车数据
+    let { id } = this.props.match.params;
+    let result = await getShopDetail(id);
+    let cart = getStorage('cartList') || {};
+    let cartList = cart[id] || [];
+    if (result.status === 200 && result.data.errorCode === 0) {
+      this.setState({
+        shopData: result.data.data,
+        cartList
+      })
+    } else {
+      Toast.error(result.data.message);
+    }
   }
 
   render() {
-    let { currentIndex } = this.state;
-    let { shopData, history, location } = this.props;
+    let { currentIndex, shopData, cartList } = this.state;
+    let { history, location } = this.props;
     let { id } = this.props.match.params;
     
     return (
@@ -84,24 +101,13 @@ class Shop extends Component {
         </div>
         <div className='main_content'>
           {
-            currentIndex === 0 ? <ShopFoodList storeId={id} /> : (currentIndex === 1 ? <ShopComment /> : <ShopInfo />) 
+            currentIndex === 0 ? <ShopFoodList shopData={shopData} storeId={id} cartList={cartList} updataCartList={this.updataCartList.bind(this)} /> : (currentIndex === 1 ? <ShopComment /> : <ShopInfo />) 
           }
         </div>
-        <BottomCart history={history} location={location}/>
+        <BottomCart history={history} location={location} cartList={cartList} shopData={shopData}/>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setShopData: id => {
-      dispatch(actions.shop.getShopData(id));
-    },
-    setCartList: opts => {
-      dispatch(actions.shop.setCartList(opts))
-    }
-  }
-}
-
-export default connect(store => ({ ...store.shop }), mapDispatchToProps)(Shop);
+export default connect(store => ({ ...store.shop }))(Shop);

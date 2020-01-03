@@ -27,5 +27,5 @@ export default [
   { path: '/search', name: 'Search', component: Search },
   { path: '/shop/:id', name: 'Shop', component: Shop },
   { path: '/order_confim', name: 'OrderConfirm', component: OrderConfirmation, auth: true },
-  { path: '/order_detail/:index', name: 'OrderDetail', component: OrderDetail },
+  { path: '/order_detail/:storeId/:orderNum', name: 'OrderDetail', component: OrderDetail },
 ]

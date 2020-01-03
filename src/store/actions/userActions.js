@@ -4,10 +4,9 @@ import { reqAddAddress } from '../../api';
 import Toast from '../../components/toast';
 import { setStorage, getStorage } from '../../util/storage';
 
-const { userLogin, userValidate, userGetOrders, userAddAddress, userGetAddress } = createActions({
+const { userLogin, userValidate, userAddAddress, userGetAddress } = createActions({
   [TYPES.USER_LOGIN]: payload => payload,
   [TYPES.USER_VALIDATE]: payload => payload,
-  [TYPES.USER_GET_ORDERS]: payload => payload,
   [TYPES.USER_ADD_ADDRESS]: async data => {
     let { id, address, history, from } = data;
     let res = await reqAddAddress({id, address});
@@ -25,11 +24,10 @@ const { userLogin, userValidate, userGetOrders, userAddAddress, userGetAddress }
   },
   [TYPES.USER_GET_ADDRESS]: payload => payload,
 });
-
+ 
 export default {
   userLogin,
   userValidate,
-  userGetOrders,
   userAddAddress,
   userGetAddress,
 }
