@@ -8,10 +8,8 @@ function OrderDetail(props) {
 
   useEffect(() => {
     let { storeId, orderNum } = match.params;
-    console.log(1);
     (async () => {
       let result = await reqOrderDetail({storeId, orderNum});
-      console.log(result);
       if (result.status === 200 && result.data.errorCode === 0) {
         setOrder(result.data.order);
       } 
