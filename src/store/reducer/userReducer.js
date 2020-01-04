@@ -12,7 +12,7 @@ const reducer = handleActions({
     return {
       ...state,
       userInfo: action.payload.userInfo,
-      avatar: action.payload.avatar
+      isLogin: action.payload.isLogin
     }
   },
   [TYPES.USER_VALIDATE]: (state, action) => {

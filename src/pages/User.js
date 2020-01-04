@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import BottomTabBar from '../components/BottomTabBar';
 import { getStorage } from '../util/storage';
 
-@withRouter
 @connect(state => ({ ...state.user }))
 class User extends Component {
 

@@ -43,7 +43,8 @@ function UserLogin(props) {
 
       // userInfo  avata、信息存放在redux中
       userLogin({
-        userInfo
+        userInfo,
+        isLogin: true
       });
       history.replace(toPath);
 
