@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import BottomTabBar from '../components/BottomTabBar';
 import { getStorage } from '../util/storage';
 
+@withRouter
+@connect(state => ({ ...state.user }))
 class User extends Component {
 
   handleClickRegister() {
@@ -93,4 +95,4 @@ class User extends Component {
   }
 }
 
-export default withRouter(connect(state => ({ ...state.user }))(User));
+export default User;

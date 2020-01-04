@@ -10,6 +10,7 @@ import { getShopDetail } from '../api';
 import { getStorage, setStorage } from '../util/storage';
 import Toast from "../components/toast";
 
+@connect(store => ({ ...store.shop }))
 class Shop extends Component {
   constructor(props) {
     super(props);
@@ -110,4 +111,4 @@ class Shop extends Component {
   }
 }
 
-export default connect(store => ({ ...store.shop }))(Shop);
+export default Shop;

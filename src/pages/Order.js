@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import BottomTabBar from '../components/BottomTabBar';
 import { connect } from 'react-redux';
 import formateDate from '../util/formatDate';
 import { requestGetOrders } from '../api';
 import Toast from '../components/toast';
 
+@connect(state => ({ orderList: state.user.orders, userInfo: state.user.userInfo }))
 class Order extends Component {
   constructor(props) {
     super(props);
@@ -71,4 +72,4 @@ class Order extends Component {
   }
 }
 
-export default withRouter(connect( state => ({ orderList: state.user.orders, userInfo: state.user.userInfo }))(Order));
+export default Order;

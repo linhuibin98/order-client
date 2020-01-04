@@ -6,6 +6,7 @@ import  BottomTabBar from '../components/BottomTabBar';
 import { connect } from 'react-redux';
 import { getStorage } from '../util/storage'
 
+@connect(state => ({ ...state.user }))
 class Food extends Component {
   constructor(props) {
     super(props);
@@ -106,4 +107,4 @@ class Food extends Component {
 }
 
 
-export default connect(state => ({ ...state.user }))(Food);
+export default Food;
