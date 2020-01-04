@@ -10,6 +10,7 @@ axios.interceptors.request.use(config => {
   if (!url.includes('token')) {
     Loading.show();
   }
+  
   // 请求头添加token
   config.headers.Authorization = `${getStorage('token')}`;
   return config;

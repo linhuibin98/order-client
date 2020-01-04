@@ -40,7 +40,7 @@ class User extends Component {
           ) : (
               <header className='user_login'>
                 <button className='register btn' onClick={this.handleClickRegister.bind(this)}>注册</button>
-                <button className='login btn' onClick={this.handleClickLogin.bind(this)}>登陆</button>
+                <button className='login btn' onClick={this.handleClickLogin.bind(this)}>登录</button>
               </header>
             )
         }

@@ -1400,7 +1400,7 @@
       }
 
       .btn {
-        padding: 8px 0;
+        padding: 15px 0;
         margin-top: 20px;
         background-color: #D94953;
         color: #fff;
@@ -1442,28 +1442,51 @@
     align-items: center;
 
     .form {
-      display: flex;
-      flex-direction: column;
       padding: 80px 30px;
       background-color: #EAEAEA;
       border-radius: 10px;
       width: 90vw;
 
-      input{
-        width: 100%;
-        background-color: #fff;
-        border: none;
-        padding: 15px 50px;
-        border-radius: 10px;
-
+      > input {
         &:first-child {
           margin-bottom: 40px;
         }
       }
 
+      input{
+        width: 100%;
+        background-color: #fff;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 10px;
+        font-size: 28px;
+      }
+
+      .box {
+        display: flex;
+        margin-top: 20px;
+
+        #validate {
+          width: 50%;
+          margin-right: 20px;
+        }
+
+      }
+
+      .register {
+        margin-top: 20px;
+        font-size: 22px;
+        float: right;
+
+        span {
+          color: #02b6ff;
+        }
+      }
+
       .btn {
-        padding: 8px 0;
+        width: 100%;
         margin-top: 30px;
+        padding: 15px 0;
         background-color: green;
         color: #fff;
         font-weight: 700;
