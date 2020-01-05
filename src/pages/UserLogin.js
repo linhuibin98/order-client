@@ -91,6 +91,7 @@ function UserLogin(props) {
             name="username"
             type="text"
             placeholder="请输入用户名或手机号"
+            value='15170729230'
           />
           <input
             ref={passwordRef}
@@ -98,9 +99,10 @@ function UserLogin(props) {
             name="password"
             id="password"
             placeholder="请输入密码"
+            value='123456'
           />
           <div className="box">
-            <input ref={codeRef} type="text" id="validate" placeholder="验证码" />
+            <input ref={codeRef} type="text" id="validate" placeholder="验证码" value={code} />
             <canvas
               ref={canvasRef}
               id="canvas"

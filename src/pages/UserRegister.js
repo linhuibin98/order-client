@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
 import Toast from '../components/toast';
 import { userRegister } from '../api';
+import { Link } from 'react-router-dom';
 
 function UserRegister(props) {
 
@@ -65,6 +66,9 @@ function UserRegister(props) {
             <input type="password" name="password" id="password" ref={passwordRef}/>
           </label>
           <button className='btn' onClick={handleClickRegister}>注册</button>
+          <Link to="/user/login" className="login-tip">
+            已有账号？<span>去登录</span>
+          </Link>
         </div>
       </section>
     </div>
