@@ -26,17 +26,11 @@ class Food extends Component {
 
   handleAddress() {
     let { isLogin, history, location } = this.props;
-    if (!isLogin) {
-      return history.push({
-        pathname: '/user/login',
-        state: { from: location.pathname }
-      })
-    } else {
-      return history.push({
-        pathname: '/user/address/select',
-        state: { from: location.pathname }
-      })
-    }
+    let toPath = isLogin ? '/user/address/select' : '/user/login';
+    history.push({
+      pathname: toPath,
+      search: `?redirect=${location.pathname}`
+    })
   }
 
   render() {

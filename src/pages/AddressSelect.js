@@ -1,39 +1,44 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
 import { getStorage, setStorage } from '../util/storage';
 import { reqGetAddress } from '../api';
 import Toast from '../components/toast';
+import formatSearch from '../util/formatSearch';
 
 function MyAddress(props) {
-  let { history, addressList, getAddress, userInfo } = props;
-  
+  let { history, addressList, getAddress, userInfo, location } = props;
+
   useEffect(() => {
     (async () => {
-      const result = await reqGetAddress(userInfo.id);
+      if (userInfo.id) {
+        const result = await reqGetAddress(userInfo.id);
 
-      if (result.status === 200 && result.data.errorCode === 0) {
-        getAddress(result.data.address);
-      } else {
-        Toast.error(result.data.message);
+        if (result.status === 200 && result.data.errorCode === 0) {
+          getAddress(result.data.address);
+        } else {
+          Toast.error(result.data.message);
+        }
       }
     })()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleGoBack() {
-    history.goBack();
+    let redirect = formatSearch(location.search);
+
+    redirect ? history.replace(redirect) : history.goBack();
   }
 
   function selectAddress(e) {
     let index = e.currentTarget.getAttribute('data-index');
-    let currentAddress = addressList[index];
+    let currentAddress = addressList[index];;
 
     let address = getStorage('address') || {};
     address[userInfo.id] = currentAddress;
     setStorage('address', address);
-    history.goBack();
+    handleGoBack();
   }
 
   return (
@@ -59,15 +64,14 @@ function MyAddress(props) {
                   </div>
                 </div>
                 <div className='operate'>
-                  <span className='iconfont icon-xiugai'></span>
-                  <span className='iconfont icon-cha'></span>
+                  <input type="radio" name="select" id="select" />
                 </div>
               </div>
             )
           })
         }
       </section>
-      <Link className='footer' to={location => ({pathname: '/user/address/add', state: {from: location.pathname}})}>
+      <Link className='footer' to={location => ({ pathname: '/user/address/add', search: `?redirect=${location.pathname + location.search}`}) } >
         <span className='iconfont icon-jia'></span>
         <p>新增收货地址</p>
       </Link>

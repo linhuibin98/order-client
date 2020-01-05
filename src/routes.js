@@ -18,7 +18,7 @@ export default [
   { path: '/user/register', name: 'Refister', component: UserRegister },
   { path: '/user/login', name: 'Login', component: UserLogin },
   { path: '/user/address/add', name: 'AddressAdd', component: AddressAdd },
-  { path: '/user/address/select', name: 'AddressSelect', component: AddressSelect },
+  { path: '/user/address/select', name: 'AddressSelect', component: AddressSelect, auth: true },
   { path: '/user/address', name: 'MyAddress', component: MyAddress, auth: true },
   { path: '/user/info', name: 'UserInfo', component: UserInfo, auth: true },
   { path: '/user/avatar', name: 'Avatar', component: AvatarUpload, auth: true },

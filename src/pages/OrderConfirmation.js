@@ -5,12 +5,13 @@ import Toast from '../components/toast';
 import Modal from '../components/modal';
 import { generateOrder } from '../api';
 import { Link } from 'react-router-dom';
+import formatSearch from '../util/formatSearch';
 
 function OrderConfirmation(props) {
   let [order, setOrder] = useState({});
   let [address, setAddress] = useState({});
 
-  let { userInfo, location } = props;
+  let { userInfo, location, history } = props;
   let shopData = (location.state && location.state.shopData) || getStorage('shopData');
 
   let cart = getStorage('cartList');
@@ -53,7 +54,9 @@ function OrderConfirmation(props) {
   function handleGoBack() {
     //退出订单页面, 清楚本地存储
     setStorage('order', {});
-    props.history.goBack();
+    let redirect = formatSearch(location.search);
+
+    redirect ? history.replace(redirect) : history.goBack();
   }
 
   function handleClickPay() {
@@ -80,7 +83,7 @@ function OrderConfirmation(props) {
           //退出订单页面, 清楚本地存储
           setStorage('order', {});
 
-          props.history.push('/order');
+          history.push('/order');
         } else {
           Toast.error('服务器正忙...');
         }
@@ -101,7 +104,7 @@ function OrderConfirmation(props) {
           address.name ? (
             <>
               <p>订单配送至</p>
-              <Link to='/user/address/select'>
+              <Link to={{pathname: '/user/address/select', search: `?redirect=${location.pathname + location.search}`}}>
                 <p>
                   <span>{address.address}</span>
                   <span>></span>

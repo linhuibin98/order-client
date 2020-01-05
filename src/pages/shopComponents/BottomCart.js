@@ -19,7 +19,8 @@ function BottomCart(props) {
     if (isLogin) {//已经登陆，跳转到订单页
       history.push({
         pathname: '/order_confim',
-        state: { shopData }
+        state: { shopData },
+        search: `?redirect=${location.pathname}`
       });
     } else {// 未登陆，跳转到登录页
       Toast.warning('请登录...');

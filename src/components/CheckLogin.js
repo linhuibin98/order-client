@@ -25,7 +25,7 @@ export default function checkLogin(Target) {
   @connect(state => ({ isLogin: state.user.isLogin }))
   class NewComponent extends Component {
     render() {
-      let { pathname, state } = this.props.location;
+      let { location: { pathname, state } } = this.props.history;
       let isLogin = this.props.isLogin;
       let route = routes.find(route => route.path === pathname) || {};
 
@@ -41,6 +41,7 @@ export default function checkLogin(Target) {
           pathname: (state && state.from) || '/'
         }} />
       }
+
       return <Target />
     }
   }

@@ -30,7 +30,7 @@ class Shop extends Component {
 
   // 点击回退
   clickGoback() {
-    this.props.history.go(-1);
+    this.props.history.replace('/');
   }
 
   updataCartList(cartList) {

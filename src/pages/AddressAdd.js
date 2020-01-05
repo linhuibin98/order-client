@@ -1,7 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import Toast from '../components/toast';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
+import formatSearch from '../util/formatSearch';
+import { reqAddAddress } from '../api';
+import { setStorage, getStorage } from '../util/storage';
 
 function AddressAdd(props) {
   let { history, userInfo, addDre, location } = props;
@@ -11,19 +14,13 @@ function AddressAdd(props) {
   let addressRef = useRef(null);
   let detailRef = useRef(null);
 
-  let [from, setFrom] = useState('');
-
-  useEffect(() => {
-    let fromLocation = location.state && location.state.from;
-
-    setFrom(fromLocation);
-  }, [location.state, setFrom])
-
   function handleGoBack() {
-    history.goBack();
+    let redirect = formatSearch(location.search);
+
+    redirect ? history.replace(redirect) : history.goBack();
   }
 
-  function handleConfirm() {
+  async function handleConfirm() {
     let linkVal = linkRef.current.value;
     let phoneVal = phoneRef.current.value;
     let addVal = addressRef.current.value;
@@ -33,17 +30,26 @@ function AddressAdd(props) {
       return Toast.warning('不能为空, 必须填写...');
     }
 
-    addDre({
-      id: userInfo.id,
-      address: {
-        name: linkVal,
-        phone: phoneVal,
-        address: addVal + deVal
-      },
-      history,
-      from
-    });
+    let id = userInfo.id;
+    const address = {
+      name: linkVal,
+      phone: phoneVal,
+      address: addVal + deVal
+    }
 
+    let result = await reqAddAddress({ id, address });
+
+    if (result.status === 200 && result.data.errorCode === 0) {
+      // 保存在redux中
+      addDre(result.data.address);
+      let addressLocal = getStorage('address') || {};
+      addressLocal[id] = address;;
+      Toast.success('添加成功...');
+      setStorage('address', addressLocal);
+      return handleGoBack();
+    } else {
+      return Toast.error('服务器正忙, 请稍后再试...')
+    }
   }
 
   return (
@@ -89,4 +95,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(state => ({userInfo: state.user.userInfo}), mapDispatchToProps)(AddressAdd);
+export default connect(state => ({ userInfo: state.user.userInfo }), mapDispatchToProps)(AddressAdd);
