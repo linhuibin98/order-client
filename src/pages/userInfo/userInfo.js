@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setStorage, getStorage } from '../../util/storage';
 import actions from '../../store/actions';
 import Toast from '../../components/toast';
+import { Link } from 'react-router-dom';
 
 function UserInfo(props) {
   let { userInfo, validateToken, history } = props;
@@ -50,10 +51,10 @@ function UserInfo(props) {
       <h2>安全设置</h2>
       <div className='phone item'>
         <b>登录密码</b>
-        <span className='content'>
+        <Link className='content' to='/user/password'>
           <span className='change_text'>修改</span>
           <span className='icon'>></span>
-        </span>
+        </Link>
       </div>
       <button className='back_btn' onClick={ handleQuit }>退出登录</button>
     </div>

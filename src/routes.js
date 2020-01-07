@@ -11,7 +11,8 @@ import MyAddress from './pages/MyAddress';
 import AddressAdd from './pages/AddressAdd';
 import AddressSelect from './pages/AddressSelect';
 import UserInfo from './pages/userInfo/userInfo';
-import AvatarUpload from './pages//avatarUpload/AvatarUpload';
+import AvatarUpload from './pages/avatarUpload/AvatarUpload';
+import ChangePassword from './pages/changePassword';
 
 export default [
   { path: '/', name: 'Home', component: Foods },
@@ -22,6 +23,7 @@ export default [
   { path: '/user/address', name: 'MyAddress', component: MyAddress, auth: true },
   { path: '/user/info', name: 'UserInfo', component: UserInfo, auth: true },
   { path: '/user/avatar', name: 'Avatar', component: AvatarUpload, auth: true },
+  { path: '/user/password', name: 'ChangePassword', component: ChangePassword, auth: true },
   { path: '/user', name: 'User', component: User },
   { path: '/order', name: 'Order', component: Order, auth: true },
   { path: '/search', name: 'Search', component: Search },
