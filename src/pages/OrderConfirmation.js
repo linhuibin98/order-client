@@ -17,21 +17,16 @@ function OrderConfirmation(props) {
   let cart = getStorage('cartList');
   cartList = cartList.length ? cartList : (cart[shopData._id] || []);
 
-  let orderLocal = getStorage('order');
-  let addressLocal = getStorage('address') || {};
 
   useEffect(() => {
     // 本地保存数据
     setStorage('shopData', shopData);
+    let addressLocal = getStorage('address') || {};
     if (addressLocal[userInfo.id] && addressLocal[userInfo.id].name) {
       setAddress(addressLocal[userInfo.id]);
     }
 
-    if (orderLocal && orderLocal.storeName) {
-      setOrder({
-        ...orderLocal
-      });
-    } else {
+    if (cartList.length !== 0) {
       let allPrice = 0;
       cartList.forEach(food => {
         allPrice += parseFloat(food.price) * food.num;
@@ -47,6 +42,11 @@ function OrderConfirmation(props) {
 
       setOrder(o);
       setStorage('order', o);
+    } else {
+      let orderLocal = getStorage('order');
+      setOrder({
+        ...orderLocal
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -84,8 +84,9 @@ function OrderConfirmation(props) {
 
         if (res.status === 200 && res.data.errorCode === 0) {
           //退出订单页面, 清楚本地存储
-          setStorage('order', {});
-
+          const cart = getStorage('cartList') || {};
+          cart[shopData._id] = [];
+          setStorage('cartList', cart);
           window.location.href = res.data.result;
         } else {
           Toast.error('服务器正忙...');

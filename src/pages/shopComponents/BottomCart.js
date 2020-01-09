@@ -55,7 +55,6 @@ function BottomCart(props) {
 const mapDispatchToProps = dispatch => {
   return {
     updateCartList: (data) => {
-      console.log(actions);
       dispatch(actions.shop.shopCartlist(data))
     }
   }

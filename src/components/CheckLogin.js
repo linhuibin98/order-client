@@ -26,6 +26,7 @@ export default function checkLogin(Target) {
   class NewComponent extends Component {
     render() {
       let { location: { pathname, state } } = this.props.history;
+
       let isLogin = this.props.isLogin;
       let route = routes.find(route => route.path === pathname) || {};
 
