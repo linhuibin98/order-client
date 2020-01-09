@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 
 class Confirm extends Component {
     render() {
-        const { contentText, onOk, onCancel } = this.props
+        const { contentText, onOk, onCancel, title } = this.props
         return (
             <div className="modal-confirm dialog">
+                <h3>{title}</h3>
                 <h4>{contentText}</h4>
                 <div className="button-wrapper">
                     <button type="button" className="check" onClick={() => { if (onOk) onOk() }}>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Toast from '../../components/toast';
+import actions from '../../store/actions';
 
 function BottomCart(props) {
 
-  const { cartList, isLogin, history, location, shopData } = props;
+  const { cartList, isLogin, history, location, shopData, updateCartList } = props;
 
   let isEmpty = !cartList.length;
   let allPrice = 0;
@@ -17,6 +18,7 @@ function BottomCart(props) {
 
   function handleClickPay() {
     if (isLogin) {//已经登陆，跳转到订单页
+      updateCartList(cartList);
       history.push({
         pathname: '/order_confim',
         state: { shopData },
@@ -50,4 +52,13 @@ function BottomCart(props) {
   )
 }
 
-export default connect(store => ({ isLogin: store.user.isLogin }))(BottomCart);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateCartList: (data) => {
+      console.log(actions);
+      dispatch(actions.shop.shopCartlist(data))
+    }
+  }
+}
+
+export default connect(store => ({ isLogin: store.user.isLogin }), mapDispatchToProps)(BottomCart);

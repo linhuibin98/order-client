@@ -11,11 +11,11 @@ function OrderConfirmation(props) {
   let [order, setOrder] = useState({});
   let [address, setAddress] = useState({});
 
-  let { userInfo, location, history } = props;
+  let { userInfo, location, history, cartList } = props;
   let shopData = (location.state && location.state.shopData) || getStorage('shopData');
 
   let cart = getStorage('cartList');
-  let cartList = cart[shopData._id] || [];
+  cartList = cartList.length ? cartList : (cart[shopData._id] || []);
 
   let orderLocal = getStorage('order');
   let addressLocal = getStorage('address') || {};
@@ -48,7 +48,7 @@ function OrderConfirmation(props) {
       setOrder(o);
       setStorage('order', o);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleGoBack() {
@@ -61,7 +61,14 @@ function OrderConfirmation(props) {
 
   function handleClickPay() {
     Modal.confirm({
-      contentText: '确认支付',
+      title: '支付宝支付测试接口',
+      contentText: `
+      请选择：继续浏览器付款
+      登录以下账号
+      账号: pvnseu0360@sandbox.com
+      登录密码: 111111
+      支付密码: 111111
+      `,
       async onOk() {
         let sendData = {
           userId: userInfo.id,
@@ -76,14 +83,10 @@ function OrderConfirmation(props) {
         let res = await generateOrder(sendData);
 
         if (res.status === 200 && res.data.errorCode === 0) {
-          Toast.success('支付成功');
-          //清空购物车
-          cart[shopData._id] = [];
-          setStorage('cartList', cart);
           //退出订单页面, 清楚本地存储
           setStorage('order', {});
 
-          history.push('/order');
+          window.location.href = res.data.result;
         } else {
           Toast.error('服务器正忙...');
         }
@@ -104,7 +107,7 @@ function OrderConfirmation(props) {
           address.name ? (
             <>
               <p>订单配送至</p>
-              <Link to={{pathname: '/user/address/select', search: `?redirect=${location.pathname + location.search}`}}>
+              <Link to={{ pathname: '/user/address/select', search: `?redirect=${location.pathname + location.search}` }}>
                 <p>
                   <span>{address.address}</span>
                   <span>></span>
@@ -162,4 +165,4 @@ function OrderConfirmation(props) {
   );
 }
 
-export default connect(store => ({ userInfo: store.user.userInfo }))(OrderConfirmation);
+export default connect(store => ({ userInfo: store.user.userInfo, cartList: store.shop.cartList }))(OrderConfirmation);

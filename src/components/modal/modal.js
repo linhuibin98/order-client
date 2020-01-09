@@ -45,7 +45,7 @@ class Modal extends Component {
     }
 
     render() {
-        const { type, contentText } = this.props
+        const { type, contentText, title } = this.props
         const { onClose } = this
         const { showDialog } = this.state
         return (
@@ -63,6 +63,7 @@ class Modal extends Component {
                         {
                             this.renderDialogForType(type, {
                                 contentText,
+                                title,
                                 onOk(data) { onClose(true, data) },
                                 onCancel() { onClose(false) },
                             })

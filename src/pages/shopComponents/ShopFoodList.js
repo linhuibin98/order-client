@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef } from 'react';
 import ShopCommend from "./ShopCommend";
-import { connect } from 'react-redux';
 import isCart from '../../util/isCart';
 
 function ShopFoodList(props) {
@@ -183,4 +182,4 @@ function ShopFoodList(props) {
 }
 
 
-export default connect(store => ({ ...store.shop }))(ShopFoodList);
+export default ShopFoodList;
