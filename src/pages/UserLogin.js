@@ -18,7 +18,9 @@ function UserLogin(props) {
   let [code, setCode] = useState('');
 
   function handleGoBack() {
-    history.go(-1);
+    let redirect = formatSearch(location.search);
+
+    redirect ? history.replace(redirect) : history.goBack();
   }
 
   async function handleClickLogin() {
@@ -45,8 +47,6 @@ function UserLogin(props) {
 
     // 登录成功
     if (result.status === 200 && result.data.errorCode === 0) {
-      let params = formatSearch(location.search);
-      let toPath = params.redirect || "/";
 
       let { userInfo, avatar, message, token } = result.data;
       Toast.success(message);
@@ -60,7 +60,11 @@ function UserLogin(props) {
         userInfo,
         isLogin: true
       });
-      history.replace(toPath);
+     if (location.state && location.state.from) {
+        history.replace(location.state.from);
+     } else {
+      handleGoBack();
+     }
     } else {
       Toast.error(result.data.message);
     }

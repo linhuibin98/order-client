@@ -6,7 +6,7 @@ import formateDate from '../util/formatDate';
 import { requestGetOrders } from '../api';
 import Toast from '../components/toast';
 
-@connect(state => ({ orderList: state.user.orders, userInfo: state.user.userInfo }))
+@connect(state => ({ userInfo: state.user.userInfo }))
 class Order extends Component {
   constructor(props) {
     super(props);
