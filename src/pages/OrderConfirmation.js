@@ -33,6 +33,8 @@ function OrderConfirmation(props) {
       });
       allPrice += shopData.distribution_cost;
 
+      allPrice = allPrice.toFixed(2);
+
       let o = {
         storeName: shopData.store_name,
         dispatchCost: shopData.distribution_cost,
@@ -60,6 +62,9 @@ function OrderConfirmation(props) {
   }
 
   function handleClickPay() {
+    if (!address.name) {
+      return Toast.info('请添加地址...');
+    }
     Modal.confirm({
       title: '支付宝支付测试接口',
       contentText: `

@@ -2,6 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Toast from '../../components/toast';
 import actions from '../../store/actions';
+import PropTypes  from 'prop-types';
+
+BottomCart.propTypes = {
+  cartList: PropTypes.array,
+  shopData: PropTypes.object
+}
 
 function BottomCart(props) {
 
@@ -17,6 +23,7 @@ function BottomCart(props) {
   allPrice = allPrice.toFixed(2);
 
   function handleClickPay() {
+    console.log(updateCartList)
     if (isLogin) {//已经登陆，跳转到订单页
       updateCartList(cartList);
       history.push({

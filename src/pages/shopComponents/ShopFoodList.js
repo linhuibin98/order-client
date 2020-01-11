@@ -2,6 +2,13 @@
 import React, { useState, useRef } from 'react';
 import ShopCommend from "./ShopCommend";
 import isCart from '../../util/isCart';
+import PropTypes from 'prop-types';
+
+ShopFoodList.propTypes = {
+  cartList: PropTypes.array,
+  shopData: PropTypes.object,
+  updataCartList: PropTypes.func
+}
 
 function ShopFoodList(props) {
   // 当前菜单所在位置
