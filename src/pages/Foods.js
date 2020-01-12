@@ -3,8 +3,12 @@ import { getStoreList } from '../api/index';
 import { Link } from 'react-router-dom';
 import Stars from '../components/Stars';
 import  BottomTabBar from '../components/BottomTabBar';
+import Carousel from '../components/carousel';
 import { connect } from 'react-redux';
-import { getStorage } from '../util/storage'
+import { getStorage } from '../util/storage';
+import img1 from '../assets/images/cat2.jpg';
+import img2 from '../assets/images/cat3.jpg';
+import img3 from '../assets/images/cat4.jpg';
 
 @connect(state => ({ ...state.user }))
 class Food extends Component {
@@ -56,6 +60,13 @@ class Food extends Component {
             <div className='ipt'><i className='iconfont icon-sousuo'></i><span>搜索附近商家、商品名称</span></div>
           </Link>
         </header>
+        <section className='carousel'>
+          <Carousel>
+            <div><img src={img1} alt="cat1"/></div>
+            <div><img src={img2} alt="cat2"/></div>
+            <div><img src={img3} alt="cat3"/></div>
+          </Carousel>
+        </section>
         <section className='recommended_merchants'>
           <span className='split'>——</span>
           <span className='title'>推荐商家</span>
