@@ -4,6 +4,7 @@ import checkLogin from './components/CheckLogin';
 import routes from './routes';
 import './App.less';
 
+@checkLogin
 class App extends Component {
 
   render() {
@@ -23,4 +24,4 @@ class App extends Component {
   }
 }
 
-export default checkLogin(App);
+export default App;
