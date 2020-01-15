@@ -33,6 +33,16 @@ export function getStoreList() {
   return axios.get('/stores');
 }
 
+// 获取首页店铺、轮播图数据
+export function reqHomeData() {
+  return axios.all([getStoreList(), reqCarousel()]);
+}
+
+// 轮播图
+export function reqCarousel() {
+  return axios.get('/carousel');
+}
+
 // 通过店铺Id 获取详细信息->food 
 export function getShopDetail(id) {
   return axios.get(`/store/detail/${id}`);

@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { getStoreList } from '../api/index';
+import { reqHomeData } from '../api/index';
 import { Link } from 'react-router-dom';
 import Stars from '../components/Stars';
 import  BottomTabBar from '../components/BottomTabBar';
 import Carousel from '../components/carousel';
 import { connect } from 'react-redux';
 import { getStorage } from '../util/storage';
-import img1 from '../assets/images/cat2.jpg';
-import img2 from '../assets/images/cat3.jpg';
-import img3 from '../assets/images/cat4.jpg';
 
 @connect(state => ({ ...state.user }))
 class Food extends Component {
@@ -16,15 +13,17 @@ class Food extends Component {
     super(props);
     this.state = {
       storeList: [],
-      currentAddr: ''
+      currentAddr: '',
+      carouselList: []
     };
   }
 
   async componentDidMount() {
-    let res = await getStoreList();
+    let result = await reqHomeData();
 
     this.setState({
-      storeList: res.data.data
+      storeList: result[0].data.data,
+      carouselList: result[1].data.data
     })
   }
 
@@ -39,7 +38,7 @@ class Food extends Component {
 
   render() {
     let { userInfo: { id } } = this.props;
-    let { storeList } = this.state;
+    let { storeList, carouselList } = this.state;
     let address = getStorage('address');
 
     let currentAddr = '';
@@ -62,9 +61,13 @@ class Food extends Component {
         </header>
         <section className='carousel'>
           <Carousel>
-            <div><img src={img1} alt="cat1"/></div>
-            <div><img src={img2} alt="cat2"/></div>
-            <div><img src={img3} alt="cat3"/></div>
+            {
+              carouselList.map((item, index) => {
+                return (
+                  <Link to={item.path} key={index}><img src={item.imgSrc} alt={'car' + index} /></Link>
+                )
+              })
+            }
           </Carousel>
         </section>
         <section className='recommended_merchants'>
