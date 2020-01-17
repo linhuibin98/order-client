@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import actions from '../store/actions';
 import { reqGetAddress } from '../api';
 import Toast from '../components/toast';
-import { func } from 'prop-types';
 
 function MyAddress(props) {
   let { history, addressList, getAddress, userInfo } = props;
