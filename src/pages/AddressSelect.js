@@ -3,25 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
 import { getStorage, setStorage } from '../util/storage';
-import { reqGetAddress } from '../api';
-import Toast from '../components/toast';
 import formatSearch from '../util/formatSearch';
 
 function MyAddress(props) {
   let { history, addressList, getAddress, userInfo, location } = props;
 
   useEffect(() => {
-    (async () => {
-      if (userInfo.id) {
-        const result = await reqGetAddress(userInfo.id);
-
-        if (result.status === 200 && result.data.errorCode === 0) {
-          getAddress(result.data.address);
-        } else {
-          Toast.error(result.data.message);
-        }
-      }
-    })()
+    getAddress(userInfo.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,6 +49,7 @@ function MyAddress(props) {
                   </div>
                   <div className='address_info'>
                     <span>{item.address}</span>
+                    <span>{item.detail}</span>
                   </div>
                 </div>
                 <div className='operate'>

@@ -1,18 +1,18 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Toast from '../components/toast';
 import { connect } from 'react-redux';
-import actions from '../store/actions';
 import formatSearch from '../util/formatSearch';
-import { reqAddAddress } from '../api';
+import { reqAddAddress, reqUpdateAddress, reqGetTargetAddress } from '../api';
 import { setStorage, getStorage } from '../util/storage';
 
 function AddressAdd(props) {
-  let { history, userInfo, addDre, location, match } = props;
+  let { history, userInfo, location, match } = props;
 
   let linkRef = useRef(null);
   let phoneRef = useRef(null);
   let addressRef = useRef(null);
   let detailRef = useRef(null);
+  let [targetAddress, setTargetAddress] = useState({});
 
   function handleGoBack() {
     let redirect = formatSearch(location.search);
@@ -34,23 +34,41 @@ function AddressAdd(props) {
     const address = {
       name: linkVal,
       phone: phoneVal,
-      address: addVal + deVal
+      address: addVal,
+      detail: deVal
     }
 
-    let result = await reqAddAddress({ id, address });
+    let result;
+
+    if (match.params.id) {
+      result = await reqUpdateAddress(match.params.id, address);
+    } else {
+      result = await reqAddAddress({ id, address });
+    }
 
     if (result.status === 200 && result.data.errorCode === 0) {
-      // 保存在redux中
-      addDre(result.data.address);
+      // 更新本地address数据
       let addressLocal = getStorage('address') || {};
-      addressLocal[id] = address;;
-      Toast.success('添加成功...');
+      addressLocal[id] = address;
+      Toast.success(result.data.message);
       setStorage('address', addressLocal);
       return handleGoBack();
     } else {
       return Toast.error('服务器正忙, 请稍后再试...')
     }
   }
+
+  useEffect(() => {
+    if(match.params.id) {
+      reqGetTargetAddress(match.params.id).then(result => {
+        setTargetAddress(result.data.data)
+      }).catch(err => {
+        Toast.error(err.message);
+      })
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="add_address">
@@ -64,19 +82,19 @@ function AddressAdd(props) {
         <div className='form'>
           <div className="linkman">
             <span>联系人</span>
-            <input ref={linkRef} type="text" placeholder="姓名" />
+            <input ref={linkRef} type="text" placeholder="姓名" defaultValue={targetAddress.name} />
           </div>
           <div className="linkman">
             <span>电话</span>
-            <input ref={phoneRef} type="text" placeholder="手机号码" />
+            <input ref={phoneRef} type="text" placeholder="手机号码" defaultValue={targetAddress.phone} />
           </div>
           <div className="linkman">
             <span>地址</span>
-            <input ref={addressRef} type="text" placeholder="小区/写字楼/学校" />
+            <input ref={addressRef} type="text" placeholder="小区/写字楼/学校" defaultValue={targetAddress.address} />
           </div>
           <div className="linkman">
             <span>详细</span>
-            <input ref={detailRef} type="text" placeholder="门牌号" />
+            <input ref={detailRef} type="text" placeholder="门牌号" defaultValue={targetAddress.detail} />
           </div>
         </div>
         <div className='form_btn'>
@@ -87,12 +105,4 @@ function AddressAdd(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    addDre: data => {
-      dispatch(actions.user.userAddAddress(data))
-    }
-  }
-}
-
-export default connect(state => ({ userInfo: state.user.userInfo }), mapDispatchToProps)(AddressAdd);
+export default connect(({user}) => ({ userInfo: user.userInfo }))(AddressAdd);

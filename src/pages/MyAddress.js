@@ -2,8 +2,9 @@
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
-import { reqGetAddress } from '../api';
+import { reqDeleteAddress } from '../api';
 import Toast from '../components/toast';
+import Modal from '../components/modal';
 
 function MyAddress(props) {
   let { history, addressList, getAddress, userInfo } = props;
@@ -13,22 +14,23 @@ function MyAddress(props) {
   }
 
   function deleteAddress(id) {
-    console.log(id);
-  }
+    Modal.confirm({
+      contentText: '确认删除吗?',
+      async onOk() {
+        const result = await reqDeleteAddress(id);
 
-  useEffect(() => {
-    (async () => {
-      const result = await reqGetAddress(userInfo.id);
-
-      if (result.status === 200 && result.data.errorCode === 0) {
-        getAddress(result.data.address);
-      } else {
+        if (result.status === 200 && result.data.errorCode === 0) {
+          getAddress(userInfo.id)
+          return Toast.success(result.data.message);
+        }
         Toast.error(result.data.message);
       }
-    })()
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    })
+  }
+
+  useEffect(() => { 
+    getAddress(userInfo.id);
+  }, [getAddress, userInfo.id]);
 
   return (
     <div className='myaddress_container'>
@@ -50,7 +52,7 @@ function MyAddress(props) {
                   </div>
                   <div className='address_info'>
                     <span>{item.address}</span>
-                    <span>10栋</span>
+                    <span>{ item.detail }</span>
                   </div>
                 </div>
                 <div className='operate'>
@@ -70,7 +72,7 @@ function MyAddress(props) {
   )
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     getAddress: id => {
       dispatch(actions.user.userGetAddress(id))

@@ -23,10 +23,6 @@ const reducer = handleActions({
       isLogin
     }
   },
-  [TYPES.USER_ADD_ADDRESS]: (state, action) => ({
-    ...state,
-    address: action.payload
-  }),
   [TYPES.USER_GET_ADDRESS]: (state, action) => ({
     ...state,
     address: action.payload

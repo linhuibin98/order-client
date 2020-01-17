@@ -4,7 +4,7 @@ import Loading from '../components/loading';
 
 // http://118.31.2.223/api/public/v1
 // http://127.0.0.1:8080/api/public/v1
-axios.defaults.baseURL = 'http://118.31.2.223/api/public/v1';
+axios.defaults.baseURL = 'http://127.0.0.1:8080/api/public/v1';
 
 axios.interceptors.request.use(config => {
   let {url} = config;
@@ -98,6 +98,21 @@ export function reqAddAddress(data) {
 //获取收货地址
 export function reqGetAddress(id) {
   return axios.get(`/address/${id}`);
+}
+
+// 获取指定收货地址
+export function reqGetTargetAddress(id) {
+  return axios.get(`/address/one/${id}`);
+}
+
+// 删除地址
+export function reqDeleteAddress(id) {
+  return axios.delete(`/address/delete/${id}`);
+}
+
+// 修改收货地址
+export function reqUpdateAddress(id, data) {
+  return axios.put(`/address/update/${id}`, data);
 }
 
 // 用户更改头像

@@ -115,7 +115,7 @@ function OrderConfirmation(props) {
               <p>订单配送至</p>
               <Link to={{ pathname: '/user/address/select', search: `?redirect=${location.pathname + location.search}` }}>
                 <p>
-                  <span>{address.address}</span>
+                  <span>{address.address + address.detail}</span>
                   <span>></span>
                 </p>
                 <div className="user_detail">
