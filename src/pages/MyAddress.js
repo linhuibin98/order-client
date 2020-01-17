@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import actions from '../store/actions';
 import { reqGetAddress } from '../api';
 import Toast from '../components/toast';
+import { func } from 'prop-types';
 
 function MyAddress(props) {
   let { history, addressList, getAddress, userInfo } = props;
 
   function handleGoBack() {
     history.goBack();
+  }
+
+  function deleteAddress(id) {
+    console.log(id);
   }
 
   useEffect(() => {
@@ -50,8 +55,8 @@ function MyAddress(props) {
                   </div>
                 </div>
                 <div className='operate'>
-                  <span className='iconfont icon-xiugai'></span>
-                  <span className='iconfont icon-cha'></span>
+                  <span className='iconfont icon-xiugai' onClick={() => {history.push(`/user/address/add/${item['_id']}`)}}></span>
+                  <span className='iconfont icon-cha' onClick={() => {deleteAddress(item['_id'])}}></span>
                 </div>
               </div>
             )

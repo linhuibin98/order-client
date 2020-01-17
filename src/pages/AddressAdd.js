@@ -7,7 +7,7 @@ import { reqAddAddress } from '../api';
 import { setStorage, getStorage } from '../util/storage';
 
 function AddressAdd(props) {
-  let { history, userInfo, addDre, location } = props;
+  let { history, userInfo, addDre, location, match } = props;
 
   let linkRef = useRef(null);
   let phoneRef = useRef(null);
@@ -58,7 +58,7 @@ function AddressAdd(props) {
         <span onClick={handleGoBack}>
           <i className="iconfont icon-you-copy"></i>
         </span>
-        <h1>添加地址</h1>
+        <h1>{match.params.id ? '修改' : '添加'}地址</h1>
       </header>
       <main className="content">
         <div className='form'>
