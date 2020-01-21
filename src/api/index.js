@@ -1,51 +1,57 @@
-import axios from 'axios';
-import { getStorage } from '../util/storage';
-import Loading from '../components/loading';
+import axios from 'axios'
+import { getStorage } from '../util/storage'
+import Loading from '../components/loading'
 
 // http://118.31.2.223/api/public/v1
 // http://127.0.0.1:8080/api/public/v1
-axios.defaults.baseURL = 'http://118.31.2.223/api/public/v1';
+axios.defaults.baseURL = 'http://118.31.2.223/api/public/v1'
 
-axios.interceptors.request.use(config => {
-  let {url} = config;
+axios.interceptors.request.use(
+  config => {
+    let { url } = config
 
-  if (!url.includes('token')) {
-    Loading.show();
+    if (!url.includes('token')) {
+      Loading.show()
+    }
+
+    // 请求头添加token
+    config.headers.Authorization = `${getStorage('token')}`
+    return config
+  },
+  error => {
+    return Promise.reject(error)
   }
-  
-  // 请求头添加token
-  config.headers.Authorization = `${getStorage('token')}`;
-  return config;
-}, error => {
-  return Promise.reject(error);
-});
+)
 
-axios.interceptors.response.use(response => {
-  Loading.close();
-return response;
-},error => {
-// Do something with response error
-return Promise.reject(error);
-});
+axios.interceptors.response.use(
+  response => {
+    Loading.close()
+    return response
+  },
+  error => {
+    // Do something with response error
+    return Promise.reject(error)
+  }
+)
 
 // 获取店铺列表
 export function getStoreList() {
-  return axios.get('/stores');
+  return axios.get('/stores')
 }
 
 // 获取首页店铺、轮播图数据
 export function reqHomeData() {
-  return axios.all([getStoreList(), reqCarousel()]);
+  return axios.all([getStoreList(), reqCarousel()])
 }
 
 // 轮播图
 export function reqCarousel() {
-  return axios.get('/carousel');
+  return axios.get('/carousel')
 }
 
-// 通过店铺Id 获取详细信息->food 
+// 通过店铺Id 获取详细信息->food
 export function getShopDetail(id) {
-  return axios.get(`/store/detail/${id}`);
+  return axios.get(`/store/detail/${id}`)
 }
 
 // 注册
@@ -79,12 +85,12 @@ export function generateOrder(data) {
 }
 
 // 获取订单
-export function requestGetOrders(id) {
-  return axios.get(`/order/${id}`)
+export function requestGetOrders() {
+  return axios.get('/order')
 }
 
 // 订单详情
-export function reqOrderDetail({ storeId, orderNum }) {
+export function reqOrderDetail(storeId, orderNum) {
   return axios.get(`/order/detail/${storeId}/${orderNum}`)
 }
 
@@ -96,23 +102,23 @@ export function reqAddAddress(data) {
 }
 
 //获取收货地址
-export function reqGetAddress(id) {
-  return axios.get(`/address/${id}`);
+export function reqGetAddress() {
+  return axios.get('/address')
 }
 
 // 获取指定收货地址
 export function reqGetTargetAddress(id) {
-  return axios.get(`/address/one/${id}`);
+  return axios.get(`/address/one/${id}`)
 }
 
 // 删除地址
 export function reqDeleteAddress(id) {
-  return axios.delete(`/address/delete/${id}`);
+  return axios.delete(`/address/delete/${id}`)
 }
 
 // 修改收货地址
 export function reqUpdateAddress(id, data) {
-  return axios.put(`/address/update/${id}`, data);
+  return axios.put(`/address/update/${id}`, data)
 }
 
 // 用户更改头像
@@ -120,16 +126,16 @@ export function uploadAvatar({ data, id }) {
   return axios.post(`/user/avatar/?id=${id}`, data, {
     headers: {
       'Content-Type': 'multipart/form-data'
-    },
+    }
   })
 }
 
 // 获取用户头像
 export function getAvatar(id) {
-  return axios.get(`/user/avatar/${id}`);
+  return axios.get(`/user/avatar/${id}`)
 }
 
 // 修改密码
-export function changePassword(data) { 
-  return axios.post('/user/password', data);
+export function changePassword(data) {
+  return axios.post('/user/password', data)
 }
