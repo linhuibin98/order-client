@@ -8,11 +8,11 @@
 
 - [外卖系统](https://github.com/linhuibin98/order-client)
   - [github地址](https://github.com/linhuibin98/order-client)
-  - [预览地址(手机端, 或pc浏览器开发者手机模式)](http://118.31.2.223/client): http://118.31.2.223/client
+  - [预览地址(手机端, 或pc浏览器开发者手机模式)](http://www.linhuibin.com/client): http://www.linhuibin.com/client
 
 - [商家店铺管理系统](https://github.com/linhuibin98/order-cms)
   - [github地址](https://github.com/linhuibin98/order-cms)
-  - [预览地址](http://118.31.2.223/cms): http://118.31.2.223/cms
+  - [预览地址](http://www.linhuibin.com/cms): http://www.linhuibin.com/cms
 
 - [后台服务](https://github.com/linhuibin98/order-server)
   - [github地址](https://github.com/linhuibin98/order-server)
