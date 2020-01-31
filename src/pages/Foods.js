@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import { reqHomeData } from '../api/index';
-import { Link } from 'react-router-dom';
-import Stars from '../components/Stars';
-import  BottomTabBar from '../components/BottomTabBar';
-import Carousel from '../components/carousel';
-import { connect } from 'react-redux';
-import { getStorage } from '../util/storage';
+import React, { Component } from 'react'
+import { reqHomeData } from '../api/index'
+import { Link } from 'react-router-dom'
+import StoreList from '../components/storeList'
+import BottomTabBar from '../components/BottomTabBar'
+import Carousel from '../components/carousel'
+import { connect } from 'react-redux'
+import { getStorage } from '../util/storage'
 
 @connect(state => ({ ...state.user }))
 class Food extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       storeList: [],
       currentAddr: '',
       carouselList: []
-    };
+    }
   }
 
   async componentDidMount() {
-    let result = await reqHomeData();
+    let result = await reqHomeData()
 
     this.setState({
       storeList: result[0].data.data,
@@ -28,8 +28,8 @@ class Food extends Component {
   }
 
   handleAddress() {
-    let { isLogin, history, location } = this.props;
-    let toPath = isLogin ? '/user/address/select' : '/user/login';
+    let { isLogin, history, location } = this.props
+    let toPath = isLogin ? '/user/address/select' : '/user/login'
     history.push({
       pathname: toPath,
       search: `?redirect=${location.pathname}`
@@ -37,76 +37,54 @@ class Food extends Component {
   }
 
   render() {
-    let { userInfo: { id } } = this.props;
-    let { storeList, carouselList } = this.state;
-    let address = getStorage('address');
+    let {
+      userInfo: { id }
+    } = this.props
+    let { storeList, carouselList } = this.state
+    let address = getStorage('address')
 
-    let currentAddr = '';
+    let currentAddr = ''
 
     if (address && address[id]) {
-      currentAddr = address[id].address;
-    } 
+      currentAddr = address[id].address
+    }
 
-    return ( 
-      <div className='home_container'>
-        <header className='home_header'>
-          <div className='header_address' onClick={this.handleAddress.bind(this)}>
-            <i className='iconfont icon-zuobiao'></i>
-            <span className='address_name'>{ currentAddr || '添加地址' }</span>
-            <i className='icon_trig'></i>
+    return (
+      <div className="home_container">
+        <header className="home_header">
+          <div
+            className="header_address"
+            onClick={this.handleAddress.bind(this)}
+          >
+            <i className="iconfont icon-zuobiao"></i>
+            <span className="address_name">{currentAddr || '添加地址'}</span>
+            <i className="icon_trig"></i>
           </div>
-          <Link to='/search' className="search_input">
-            <div className='ipt'><i className='iconfont icon-sousuo'></i><span>搜索附近商家、商品名称</span></div>
+          <Link to="/search" className="search_input">
+            <div className="ipt">
+              <i className="iconfont icon-sousuo"></i>
+              <span>搜索附近商家、商品名称</span>
+            </div>
           </Link>
         </header>
-        <section className='carousel'>
+        <section className="carousel">
           <Carousel>
-            {
-              carouselList.map((item, index) => {
-                return (
-                  <Link to={item.path} key={index}><img src={item.imgSrc} alt={'car' + index} /></Link>
-                )
-              })
-            }
+            {carouselList.map((item, index) => {
+              return (
+                <Link to={item.path} key={index}>
+                  <img src={item.imgSrc} alt={'car' + index} />
+                </Link>
+              )
+            })}
           </Carousel>
         </section>
-        <section className='recommended_merchants'>
-          <span className='split'>——</span>
-          <span className='title'>推荐商家</span>
-          <span className='split'>——</span>
+        <section className="recommended_merchants">
+          <span className="split">——</span>
+          <span className="title">推荐商家</span>
+          <span className="split">——</span>
         </section>
-        <section className='merchants'>
-          <ul className='merchant_list'>
-            {
-              storeList.map(store => (
-                <li className='merchant_item' key={store._id}>
-                  <Link to={`/shop/${store._id}`} className='merchant_detail'>
-                    <div className='left_logo'>
-                      <img src={store.store_logo_url} alt='logo' />
-                    </div>
-                    <div className='text_detail'>
-                      <div className='name'>
-                        <h2>{store.store_name}</h2>
-                        <span>...</span>
-                      </div>
-                      <div className='rate_num'>
-                        <div className='stars'>
-                          <Stars rate={store.store_grade} />
-                          <span>{store.store_grade}</span>
-                        </div>
-                        <p>商家配送</p>
-                      </div>
-                      <div className='dispatch'>
-                        <div><span>￥{store.startup_cost}起送</span><span className='split'>|</span><span>{store.distribution_cost ? `配送费￥${store.distribution_cost}` : '免配送费'}</span></div>
-                        <div><span>718m</span><span className='split'>|</span>30分钟<span></span></div>
-                      </div>
-                    </div>
-                  </Link>
-                  <div className='coupon_detail'></div>
-                </li>
-              ))
-            }
-          </ul>
+        <section className="merchants">
+          <StoreList storeList={storeList} />
         </section>
         <BottomTabBar />
       </div>
@@ -114,5 +92,4 @@ class Food extends Component {
   }
 }
 
-
-export default Food;
+export default Food

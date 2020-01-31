@@ -139,3 +139,12 @@ export function getAvatar(id) {
 export function changePassword(data) {
   return axios.post('/user/password', data)
 }
+
+// 搜索
+export function searchGood(q) {
+  return axios.get('/client/search', {
+    params: {
+      q
+    }
+  })
+}
