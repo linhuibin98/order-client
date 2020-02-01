@@ -31,6 +31,10 @@ export default class Search extends Component {
       })
       // 添加历史搜索记录
       let historySearchList = getStorage('historySearchList') || []
+      let index = historySearchList.findIndex(item => item === value)
+      if (index > -1) {
+        historySearchList.splice(index, 1)
+      }
       historySearchList.unshift(value)
       if (historySearchList.length > 6) {
         historySearchList.length--

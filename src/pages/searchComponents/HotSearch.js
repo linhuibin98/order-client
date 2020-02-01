@@ -39,7 +39,11 @@ export default function HotSearch(props) {
           <section className="search_content">
             {historySearchList.map((item, index) => {
               return (
-                <button className="search_item" key={index}>
+                <button
+                  className="search_item"
+                  onClick={handleClickHot}
+                  key={index}
+                >
                   {item}
                 </button>
               )
