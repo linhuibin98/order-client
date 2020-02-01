@@ -58,7 +58,7 @@ class Order extends Component {
                           {order.storeName}
                         </Link>
                         <div className="spilt">></div>
-                        <div className="arrive">已送达</div>
+                        <div className="arrive">已支付</div>
                       </div>
                       <div className="order_time">
                         {formateDate(order.time)}
