@@ -6,13 +6,13 @@ import Loading from '../components/loading'
 // http://127.0.0.1:8080/api/public/v1
 axios.defaults.baseURL = 'http://www.linhuibin.com/api/public/v1'
 
+// 请求队列
+let queueNum = 0
+
 axios.interceptors.request.use(
   config => {
-    let { url } = config
-
-    if (!url.includes('token')) {
-      Loading.show()
-    }
+    Loading.show()
+    queueNum++
 
     // 请求头添加token
     config.headers.Authorization = `${getStorage('token')}`
@@ -25,7 +25,13 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   response => {
-    Loading.close()
+    queueNum--
+    if (queueNum === 0) {
+      setTimeout(() => {
+        Loading.close()
+      }, 0)
+    }
+
     return response
   },
   error => {
