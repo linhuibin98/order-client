@@ -20,6 +20,10 @@ class Order extends Component {
     this.props.history.push(`/shop/${id}`)
   }
 
+  handleClickAssess(id) {
+    this.props.history.push(`/order/assess/${id}`)
+  }
+
   async componentDidMount() {
     let {
       userInfo: { id }
@@ -75,6 +79,14 @@ class Order extends Component {
                       <div className="price">￥{order.price}</div>
                     </Link>
                     <div className="order_operate">
+                      <button
+                        onClick={this.handleClickAssess.bind(
+                          this,
+                          order.storeId
+                        )}
+                      >
+                        评价
+                      </button>
                       <button
                         onClick={this.handleClickReOrder.bind(
                           this,

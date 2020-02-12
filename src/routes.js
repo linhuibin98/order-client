@@ -14,6 +14,7 @@ import UserInfo from './pages/userInfo/userInfo'
 import AvatarUpload from './pages/avatarUpload/AvatarUpload'
 import ChangePassword from './pages/changePassword'
 import Help from './pages/help'
+import OrderAssess from './pages/orderAssess/OrderAssess'
 
 export default [
   { path: '/', name: 'Home', component: Foods },
@@ -53,6 +54,12 @@ export default [
     path: '/order_confim',
     name: 'OrderConfirm',
     component: OrderConfirmation,
+    auth: true
+  },
+  {
+    path: '/order/assess/:id',
+    name: 'OrderAssess',
+    component: OrderAssess,
     auth: true
   },
   {
