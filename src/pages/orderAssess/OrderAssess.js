@@ -1,5 +1,5 @@
 import React from 'react'
-import Stars from '../../components/Stars'
+import StarRating from '../../components/starRating'
 import './orderAssess.less'
 
 function OrderAssess(props) {
@@ -28,7 +28,7 @@ function OrderAssess(props) {
             <li className='item'>
               <div className='name_rate'>
                 <span>奶茶(大杯)</span>
-                <Stars rate={4} />
+                <StarRating rate={0} />
               </div>
               <div className='tags' onClick={handleClickTag}>
                 <button>干净卫生</button>
@@ -46,7 +46,7 @@ function OrderAssess(props) {
             <li className='item'>
               <div className='name_rate'>
                 <span>奶茶(大杯)</span>
-                <Stars rate={4} />
+                <StarRating rate={0} />
               </div>
               <div className='tags' onClick={handleClickTag}>
                 <button>干净卫生</button>
@@ -64,7 +64,7 @@ function OrderAssess(props) {
             <li className='item'>
               <div className='name_rate'>
                 <span>奶茶(大杯)</span>
-                <Stars rate={4} />
+                <StarRating rate={0} />
               </div>
               <div className='tags' onClick={handleClickTag}>
                 <button>干净卫生</button>
@@ -82,7 +82,7 @@ function OrderAssess(props) {
             <li className='item'>
               <div className='name_rate'>
                 <span>奶茶(大杯)</span>
-                <Stars rate={4} />
+                <StarRating rate={0} />
               </div>
               <div className='tags' onClick={handleClickTag}>
                 <button>干净卫生</button>
