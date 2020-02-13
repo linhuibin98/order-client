@@ -82,7 +82,7 @@ class Order extends Component {
                       <button
                         onClick={this.handleClickAssess.bind(
                           this,
-                          order.storeId
+                          order.num
                         )}
                       >
                         评价

@@ -7,11 +7,11 @@ function OrderDetail(props) {
   let { match } = props
 
   useEffect(() => {
-    let { storeId, orderNum } = match.params
+    let { orderNum } = match.params
     ;(async () => {
-      let result = await reqOrderDetail(storeId, orderNum)
+      let result = await reqOrderDetail(orderNum)
       if (result.status === 200 && result.data.errorCode === 0) {
-        setOrder(result.data.order)
+        setOrder(result.data.data)
       }
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps

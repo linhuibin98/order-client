@@ -57,7 +57,7 @@ export default [
     auth: true
   },
   {
-    path: '/order/assess/:id',
+    path: '/order/assess/:orderNum',
     name: 'OrderAssess',
     component: OrderAssess,
     auth: true

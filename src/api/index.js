@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { getStorage } from '../util/storage'
 import Loading from '../components/loading'
+import Toast from '../components/toast'
 
 // http://www.linhuibin.com/api/public/v1
 // http://127.0.0.1:8080/api/public/v1
-axios.defaults.baseURL = 'http://www.linhuibin.com/api/public/v1'
+axios.defaults.baseURL = 'http://127.0.0.1:8080/api/public/v1'
 
 // 请求队列
 let queueNum = 0
@@ -30,6 +31,10 @@ axios.interceptors.response.use(
       setTimeout(() => {
         Loading.close()
       }, 0)
+    }
+
+    if (response.status === 401) {
+      Toast.error('登录失效, 请重新登录...')
     }
 
     return response
@@ -96,8 +101,8 @@ export function requestGetOrders() {
 }
 
 // 订单详情
-export function reqOrderDetail(storeId, orderNum) {
-  return axios.get(`/order/detail/${storeId}/${orderNum}`)
+export function reqOrderDetail(orderNum) {
+  return axios.get(`/order/detail/${orderNum}`)
 }
 
 //添加收货地址
