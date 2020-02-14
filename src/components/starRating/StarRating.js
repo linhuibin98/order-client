@@ -1,57 +1,87 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
+import { number, bool } from 'prop-types'
 
-function Star({marked, starId}) {
+/**
+ * 
+ * @param {starId} 组件id用于记录在当前star组的位置
+ * @param {marked} 该star是否标记,实心 
+ */
+
+Star.propTypes = {
+  starId: number,
+  marked: bool
+}
+
+Star.defaultProps = {
+  marked: false
+}
+
+function Star(props) {
+  const { starId, marked } = props
 
   return (
-    <span star-id={starId} style={{color: "#ff9933"}} role="button">
-      {/* 空心，实星 */}
+    <span star-id={starId} style={{color: "#ff9933"}} role='button'>
+      { /* 实心 or 空心 */ }
       {marked ? "\u2605" : "\u2606"}
     </span>
   )
 }
 
+// 评分组件
+/**
+ *
+ * @param {rate} 默认评分
+ */
 
-function StarRating({ rate }) {
-  // 分数显示
-  const [rating, setRating] = useState(
-    typeof rate === 'number' ? rate : 0
-  )
+StarRating.propTypes = {
+  rate: number
+}
 
+StarRating.defaultProps = {
+  rate: 0
+}
+
+export default function StarRating(props) {
+  const { rate } = props
+  // rating最终分数显示
+  const [rating, setRating] = useState(rate)
   const [selection, setSelection] = useState(0)
-  
-  // 鼠标移入事件
-  const hoverOver = event => {
-    let val = 0
-    
-    if (event && event.target && event.target.getAttribute("star-id")) {
-      val = event.target.getAttribute("star-id")
-      setSelection(val)
-    }
-  }
 
-  // 点击选中分数
-  const handleClick = event => {
-    setRating(event.target.getAttribute("star-id") || rate)
-  }
+  // 处理鼠标悬停事件
+  const handleOver = useCallback(event => {
+    
+    if (event && event.target && event.target.getAttribute) {
+      let val = event.target.getAttribute('star-id')
+      setSelection(val)
+    } else {
+      setSelection(0)
+    }
+  }, [])
+
+  // 点击评分
+  const handleClick = useCallback(
+    event => {
+      setRating(event.target.getAttribute("star-id") || rate)
+    },
+    [rate]
+  )
 
   return (
     <div
-      onMouseOver={hoverOver}
+      onMouseOver={handleOver}
+      onMouseOut={() => handleOver(null)}
       onClick={handleClick}
-      onMouseOut={() => hoverOver(null)}
-    >
-      { /* 创建5个组件 */ }
-      {
-        Array.from({ length: 5 }, (v, i) => (
-          <Star 
-            starId = { i + 1 }
-            key={ `star_${i + 1}`}
-            marked={ selection ? selection >= i + 1 : rating >= i + 1 }
+      style={{display: 'inline-block'}}
+      >
+      {Array.from({ length: 5 }, (v, i) => {
+        return (
+          <Star
+            key={`star${i}`}
+            starId={i + 1}
+            marked={selection ? i + 1 <= selection : i + 1 <= rating}
           />
-        ))
-      }
+        )
+      })}
     </div>
   )
 }
-
-export default StarRating
