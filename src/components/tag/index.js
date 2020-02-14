@@ -18,13 +18,17 @@ function Tag(props) {
 
   const handleClick = () => {
     tag.current.classList.toggle('select')
-    clickCallback && clickCallback(tag.current.innerText)
+    if (tag.current.classList.contains('select')) { // 添加时调用
+      clickCallback(tag.current.innerText, 'add')
+    } else {
+      clickCallback(tag.current.innerText, 'remove')
+    }
   }
 
   const handleClose = () => {
     tag.current.style.display = 'none'
   }
-
+ 
   return (
     <button 
       className='tag'

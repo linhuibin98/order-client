@@ -14,10 +14,15 @@ function TagGroup(props) {
   return (
     <div className="tag_group">
       {tagList.map((value, index) => {
-        return <Tag key={value + index} clickCallback={clickCallback || null} closable={closable}>{value}</Tag>
+        return <Tag 
+                key={value + index} 
+                clickCallback={clickCallback || null} 
+                closable={closable}>
+                  {value}
+                </Tag>
       })}
     </div>
   )
-}
+} 
 
 export default React.memo(TagGroup)

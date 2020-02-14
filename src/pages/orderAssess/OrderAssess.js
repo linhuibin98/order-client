@@ -21,10 +21,13 @@ function OrderAssess({ match, history }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleTagClick = useCallback((foodId, value) => {
+  // 存储选中的评价标签
+  const handleTagClick = useCallback((foodId, value, type) => {
     const cloneSelect = {...selectList}
     if (cloneSelect[foodId]) {
-      cloneSelect[foodId].push(value)
+      if (type === 'add') cloneSelect[foodId].push(value)
+
+      if (type === 'remove') cloneSelect[foodId] = cloneSelect[foodId].filter(item => item !== value)
     } else {
       cloneSelect[foodId] = [value]
     }
