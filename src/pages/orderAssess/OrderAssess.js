@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import StarRating from '../../components/starRating'
+import TagGroup from '../../components/tag-group'
 import { reqOrderDetail } from '../../api'
 import './orderAssess.less'
 
+const tagList = ['干净卫生', '包装精美', '物美价廉', '味道好', '很实惠', '分量足', '食材新鲜']
+
 function OrderAssess({ match, history }) {
   const [order, setOrder] = useState({})
+  const [selectList, setSelectList] = useState({})
 
   useEffect(() => {
     let { orderNum } = match.params
@@ -17,11 +21,15 @@ function OrderAssess({ match, history }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function handleClickTag(e) {
-    if (e.target.tagName === 'BUTTON') {
-      e.target.classList.toggle('select')
+  const handleTagClick = useCallback((foodId, value) => {
+    const cloneSelect = {...selectList}
+    if (cloneSelect[foodId]) {
+      cloneSelect[foodId].push(value)
+    } else {
+      cloneSelect[foodId] = [value]
     }
-  }
+    setSelectList(cloneSelect)
+  }, [selectList])
 
   return (
     <>
@@ -54,15 +62,7 @@ function OrderAssess({ match, history }) {
                       <span>{food.name}</span>
                       <StarRating rate={0} />
                     </div>
-                    <div className="tags" onClick={handleClickTag}>
-                      <button>干净卫生</button>
-                      <button>包装精美</button>
-                      <button>物美价廉</button>
-                      <button>味道好</button>
-                      <button>很实惠</button>
-                      <button>分量足</button>
-                      <button>食材新鲜</button>
-                    </div>
+                    <TagGroup tagList={tagList} clickCallback={ handleTagClick.bind(null, food.id) } />
                     <div className="text_content">
                       <textarea
                         name="des"

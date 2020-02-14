@@ -5,9 +5,8 @@ import Toast from '../components/toast'
 
 // http://www.linhuibin.com/api/public/v1
 // http://127.0.0.1:8080/api/public/v1
-let env = process.env.NODE_ENV
-axios.defaults.baseURL = env === 'production' ? 'http://www.linhuibin.com/api/public/v1' : 'http://127.0.0.1:8080/api/public/v1'
-
+// let env = process.env.NODE_ENV
+axios.defaults.baseURL = 'http://www.linhuibin.com/api/public/v1'
 // 请求队列
 let queueNum = 0
 
@@ -28,7 +27,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     queueNum--
-    if (queueNum === 0) {
+    if (queueNum === 0) { // 请求队列清空, loading关闭
       setTimeout(() => {
         Loading.close()
       }, 0)
@@ -36,6 +35,10 @@ axios.interceptors.response.use(
 
     if (response.status === 401) {
       Toast.error('登录失效, 请重新登录...')
+    }
+
+    if (response.status === 400) {
+      Toast.error('参数错误...')
     }
 
     return response
