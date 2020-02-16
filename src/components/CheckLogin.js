@@ -39,7 +39,13 @@ export default function checkLogin(Target) {
 
       if (pathname === '/user/login' && isLogin) {
         return <Redirect to={{
-          pathname: (state && state.from) || '/'
+          pathname: (state && state.from) || '/user'
+        }} />
+      }
+
+      if (pathname === '/user/register' && isLogin) {
+        return <Redirect to={{
+          pathname: (state && state.from) || '/user'
         }} />
       }
 
