@@ -94,7 +94,7 @@ class User extends Component {
               <span>></span>
             </div>
           </Link>
-          <div className="help">
+          <Link className="help" to='/download'>
             <div className="help-i">
               <i className="iconfont icon-app"></i>
             </div>
@@ -102,8 +102,8 @@ class User extends Component {
               <span>下载APP</span>
               <span>></span>
             </div>
-          </div>
-          <div className="help">
+          </Link>
+          <Link className="help" to='regular'>
             <div className="help-i">
               <i className="iconfont icon-guize"></i>
             </div>
@@ -111,7 +111,7 @@ class User extends Component {
               <span>规则中心</span>
               <span>></span>
             </div>
-          </div>
+          </Link>
         </section>
         <BottomTabBar />
       </div>

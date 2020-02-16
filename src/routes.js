@@ -15,6 +15,8 @@ import AvatarUpload from './pages/avatarUpload/AvatarUpload'
 import ChangePassword from './pages/changePassword'
 import Help from './pages/help'
 import OrderAssess from './pages/orderAssess/OrderAssess'
+import Regular from './pages/regular/Regular'
+import DownloadApp from './pages/downloadApp/DownloadApp'
 
 export default [
   { path: '/', name: 'Home', component: Foods },
@@ -71,5 +73,15 @@ export default [
     path: '/help',
     name: 'Help',
     component: Help
+  },
+  {
+    path: '/download',
+    name: 'Download',
+    component: DownloadApp
+  },
+  {
+    path: '/regular',
+    name: 'Regular',
+    component: Regular
   }
 ]
