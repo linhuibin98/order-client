@@ -27,11 +27,13 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     queueNum--
-    if (queueNum === 0) { // 请求队列清空, loading关闭
+    
+    if (queueNum === 0) {
       setTimeout(() => {
         Loading.close()
       }, 0)
     }
+    
 
     if (response.status === 401) {
       Toast.error('登录失效, 请重新登录...')
@@ -45,6 +47,14 @@ axios.interceptors.response.use(
   },
   error => {
     // Do something with response error
+    // 请求失败也要关闭loading
+    queueNum--
+    
+    if (queueNum === 0) {
+      setTimeout(() => {
+        Loading.close()
+      }, 0)
+    }
     return Promise.reject(error)
   }
 )

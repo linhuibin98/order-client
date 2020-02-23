@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { reqHomeData } from '../api/index'
+import { getStoreList } from '../api/index'
 import { Link } from 'react-router-dom'
 import StoreList from '../components/storeList'
 import BottomTabBar from '../components/BottomTabBar'
 import Carousel from '../components/carousel'
 import { connect } from 'react-redux'
+import { KeepAlive } from 'react-activation'
 import { getStorage } from '../util/storage'
+import cat2 from '../assets/images/swiper/cat2.jpg'
+import cat3 from '../assets/images/swiper/cat3.jpg'
+import cat4 from '../assets/images/swiper/cat4.jpg'
 
 @connect(state => ({ ...state.user }))
 class Food extends Component {
@@ -13,17 +17,15 @@ class Food extends Component {
     super(props)
     this.state = {
       storeList: [],
-      currentAddr: '',
-      carouselList: []
+      currentAddr: ''
     }
   }
 
   async componentDidMount() {
-    let result = await reqHomeData()
+    let result = await getStoreList()
 
     this.setState({
-      storeList: result[0].data.data,
-      carouselList: result[1].data.data
+      storeList: result.data.data
     })
   }
 
@@ -40,7 +42,7 @@ class Food extends Component {
     let {
       userInfo: { id }
     } = this.props
-    let { storeList, carouselList } = this.state
+    let { storeList } = this.state
     let address = getStorage('address')
 
     let currentAddr = ''
@@ -68,15 +70,19 @@ class Food extends Component {
           </Link>
         </header>
         <section className="carousel">
-          <Carousel>
-            {carouselList.map((item, index) => {
-              return (
-                <Link to={item.path} key={index}>
-                  <img src={item.imgSrc} alt={'car' + index} />
-                </Link>
-              )
-            })}
-          </Carousel>
+          <KeepAlive>
+            <Carousel>
+              <Link to="/shop/5dd292a8b077520c2839aa0b">
+                <img src={cat2} alt="" />
+              </Link>
+              <Link to="/shop/5dd292a8b077520c2839aa0b">
+                <img src={cat3} alt="" />
+              </Link>
+              <Link to="/shop/5dd292a8b077520c2839aa0b">
+                <img src={cat4} alt="" />
+              </Link>
+            </Carousel>
+          </KeepAlive>
         </section>
         <section className="recommended_merchants">
           <span className="split">——</span>

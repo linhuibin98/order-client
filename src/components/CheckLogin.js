@@ -28,7 +28,7 @@ export default function checkLogin(Target) {
       let { location: { pathname, state } } = this.props.history;
 
       let isLogin = this.props.isLogin;
-      let route = routes.find(route => route.path === pathname) || {};
+      let route = routes.all.find(route => route.path === pathname) || {}
 
       if (route.auth && !isLogin) {
         return <Redirect to={{
